@@ -1,2 +1,8 @@
 src/.settings/language.settings.xml
 src/.settings/org.eclipse.cdt.codan.core.prefs
+/Debug
+/Release
+.cproject
+.project
+.settings/org.eclipse.cdt.codan.core.prefs
+.settings/org.eclipse.cdt.managedbuilder.core.prefs
