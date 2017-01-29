@@ -1,1 +1,102 @@
-<!doctype HTML>
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>ICS 167: Multiplayer Snake</title>
+	</head>
+
+	<body>
+		<h1>Snake Game</h1>
+		<canvas id="canvas" width="500" height="500"></canvas>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				var canvas	 = document.getElementById("canvas");
+				var map		 = canvas.getContext("2d");
+				var width	 = $("#canvas").width();
+				var height	 = $("#canvas").height();
+				var dir_1 	 = "right"
+				var dir_2 	 = "right"
+
+				map.fillStyle = "white";
+				map.fillRect(0, 0, width, height);
+				map.strokeStyle = "black";
+				map.strokeRect(0, 0, width, height);
+
+				var snake_1;
+				var snake_2;
+				create_snake();
+
+				function create_snake() {
+					var length = 5;
+					snake_1 = [];
+					snake_2 = [];
+
+					for (var i = length - 1; i >= 0; i--) {
+						snake_1.push({x: i, y: 0});
+					}
+
+					for (var i = length - 1; i >= 0; i--) {
+						snake_2.push({x: i, y: 49});
+					}
+				}
+
+				function paint_snake_1() {
+					map.fillStyle = "white";
+					map.fillRect(0, 0, width, height);
+					map.strokeStyle = "black";
+					map.strokeRect(0, 0, width, height);
+
+					var p1x = snake_1[0].x;
+					var p1y = snake_1[0].y;
+
+					if 		(dir_1 == "right") p1x++;
+					else if (dir_1 == "left") p1x--;
+					else if (dir_1 == "up") p1y--;
+					else if (dir_1 == "down") p1y++;
+
+					var tail = snake_1.pop();
+					tail.x = p1x;
+					tail.y = p1y;
+					snake_1.unshift(tail);
+
+					for (var i = 0; i < snake_1.length; i++) {
+						var p1 = snake_1[i];
+
+						map.fillStyle = "blue";
+						map.fillRect(p1.x * 10, p1.y * 10, 10, 10);
+						map.strokeStyle = "white";
+						map.strokeRect(p1.x * 10, p1.y * 10, 10, 10);					
+					}
+				}
+
+				function paint_snake_2() {
+					var p2x = snake_2[0].x;
+					var p2y = snake_2[0].y;
+
+					if 		(dir_2 == "right") p2x++;
+					else if (dir_2 == "left") p2x--;
+					else if	(dir_2 == "up") p2y--;
+					else if (dir_2 == "down") p2y++;
+
+					var tail = snake_2.pop();
+					tail.x = p2x;
+					snake_2.unshift(tail);
+
+					for (var i = 0; i < snake_2.length; i++) {
+						var p2 = snake_2[i];
+
+						map.fillStyle = "red";
+						map.fillRect(p2.x * 10, p2.y * 10, 10, 10);
+						map.strokeStyle = "white";
+						map.strokeRect(p2.x * 10, p2.y * 10, 10, 10);					
+					}
+				}
+
+				game_loop = setInterval(paint_snake_1, 60);
+				game_loop = setInterval(paint_snake_2, 60);
+			})
+		</script>
+	</body>
+
+</html>
