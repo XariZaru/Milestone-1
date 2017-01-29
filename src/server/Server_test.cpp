@@ -18,8 +18,8 @@ int main() {
 	// Server creation
 	assert(server != NULL);
 	assert(server->getAdministrator() != NULL);
-
-
+	assert(server->getPacketHandler() != NULL);
+	std::cout << "Hi" << std::endl;
 	return 0;
 }
 

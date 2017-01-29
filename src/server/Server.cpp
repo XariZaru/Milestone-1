@@ -17,7 +17,9 @@ Server::Server() {
 }
 
 Server::~Server() {
-	// TODO Auto-generated destructor stub
+	delete admin;
+	delete packet_handler;
+	delete Server::instance;
 }
 
 Server* Server::getInstance() {

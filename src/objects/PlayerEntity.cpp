@@ -6,10 +6,11 @@
  */
 
 #include "PlayerEntity.h"
+#include <iostream>
 
 int length;
 
-PlayerEntity::PlayerEntity() {
+PlayerEntity::PlayerEntity() : direction(std::pair<int, int> {0, 1}), head(std::pair<int, int> {5, 5}) {
 	length = 0;
 }
 
@@ -21,6 +22,7 @@ int PlayerEntity::size() {
 	return length;
 }
 
-void PlayerEntity::grow(int amt) {
-	length += amt;
+void PlayerEntity::grow() {
+	head.first += direction.first; head.second += direction.second;
+	length++;
 }

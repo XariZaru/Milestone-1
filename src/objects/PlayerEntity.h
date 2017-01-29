@@ -17,10 +17,12 @@ public:
 
 	int size();
 
-	void grow(int amt);
+	void grow();
 
 private:
 	int length;
+	std::pair<int, int> head, tail, direction;
+	std::map<int, std::pair<int, int>> directions;
 };
 
 #endif /* PLAYERENTITY_H_ */

@@ -1,4 +1,5 @@
 #include "gameLogic.hpp"
+#include <iostream>
 #include <random>
 
 std::pair<int, int> getDirection(std::pair<int, int> x1, std::pair<int, int> x2)
@@ -6,8 +7,7 @@ std::pair<int, int> getDirection(std::pair<int, int> x1, std::pair<int, int> x2)
     return std::pair<int, int> {x2.first - x1.first, x2.second - x1.second};
 }
 
-SnakeGame::SnakeGame()
-: head(randomLoc()), direction(std::pair<int, int> {0, 1})
+SnakeGame::SnakeGame() : head(randomLoc()), direction(std::pair<int, int> {0, 1})
 {
     if (head.second + snakeLength >= boardSize)
         head.second -= snakeLength;
@@ -19,6 +19,7 @@ std::pair<int, int> SnakeGame::getTail()
     return snake.back();
 }
 
+// Do we need to do this handling here or is that client side? Wesley seems to have their locations spawned in already
 std::pair<int, int> SnakeGame::randomLoc()
 {
     std::mt19937 rng;
@@ -32,11 +33,14 @@ void SnakeGame::setBoardSize(int size)
     boardSize = size;
 }
 
+// Maybe we should define an actual Snake class where we can edit its properties there
+/*
 void SnakeGame::elongate()
 {
     head.first += direction.first; head.second += direction.second;
-    snakeLength++;
+    length++;
 }
+*/
 
 // Updates direction based on user input.
 void SnakeGame::updateDirection(std::pair<int, int> newDirection)
