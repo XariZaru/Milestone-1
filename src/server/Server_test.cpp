@@ -14,7 +14,12 @@ Server* server;
 
 int main() {
 	server = Server::getInstance();
+
+	// Server creation
 	assert(server != NULL);
+	assert(server->getAdministrator() != NULL);
+
+
 	return 0;
 }
 

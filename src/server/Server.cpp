@@ -8,10 +8,12 @@
 #include "Server.h"
 
 Server* Server::instance;
+EntityAdministrator* admin;
+PacketHandler* packet_handler;
 
 Server::Server() {
-	// TODO Auto-generated constructor stub
-
+	admin = new EntityAdministrator();
+	packet_handler = new PacketHandler();
 }
 
 Server::~Server() {
@@ -22,4 +24,12 @@ Server* Server::getInstance() {
 	if (!Server::instance)
 		Server::instance = new Server();
 	return Server::instance;
+}
+
+EntityAdministrator* Server::getAdministrator() {
+	return admin;
+}
+
+PacketHandler* Server::getPacketHandler() {
+	return packet_handler;
 }
