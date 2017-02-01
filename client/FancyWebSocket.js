@@ -1,4 +1,0 @@
-var FancyWebSocket = function(url)
-{
-	
-};
