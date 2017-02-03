@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <ifaddrs.h>
 #elif _WIN32
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include <WinSock2.h>
 #include <ws2tcpip.h>
 #include <iphlpapi.h>
@@ -25,8 +26,6 @@
 #include "websocket.h"
 #include "base64.h"
 #include "sha1.h"
-
-#define _WINSOCK_DEPRECATED_NO_WARNINGS
 
 using namespace std;
 
@@ -54,7 +53,6 @@ void showAvailableIP(){
     }
 
 #elif _WIN32
-    
     /* Variables used by GetIpAddrTable */
     PMIB_IPADDRTABLE pIPAddrTable;
     DWORD dwSize = 0;
@@ -718,11 +716,15 @@ void webSocket::startServer(int port){
                     if (i == listenfd){
                         socklen_t addrlen = sizeof(cli_addr);
                         int newfd = accept(listenfd, (struct sockaddr*)&cli_addr, &addrlen);
-                        if (newfd != -1){
+                        if (newfd != -1 && wsClients.size() == 0){
                             /* add new client */
                             wsAddClient(newfd, cli_addr.sin_addr);
                             printf("New connection from %s on socket %d\n", inet_ntoa(cli_addr.sin_addr), newfd);
-                        }
+						// Reject connection
+						}
+						else {
+							printf("Rejected incoming connection because one exists.\r\n");
+						}
                     }
                     else {
                         int nbytes = recv(i, buf, sizeof(buf), 0);
@@ -731,7 +733,7 @@ void webSocket::startServer(int port){
                                 wsSendClientClose(socketIDmap[i], WS_STATUS_PROTOCOL_ERROR);
                             else if (nbytes == 0)
                                 wsRemoveClient(socketIDmap[i]);
-                            else {
+							else {
                                 if (!wsProcessClient(socketIDmap[i], buf, nbytes))
                                     wsSendClientClose(socketIDmap[i], WS_STATUS_PROTOCOL_ERROR);
                             }

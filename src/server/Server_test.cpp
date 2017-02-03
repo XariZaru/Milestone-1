@@ -12,6 +12,7 @@
 
 Server* server;
 
+/*
 int main() {
 	server = Server::getInstance();
 
@@ -23,3 +24,4 @@ int main() {
 	return 0;
 }
 
+*/

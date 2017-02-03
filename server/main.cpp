@@ -1,11 +1,11 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdlib.h>
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <time.h>
 #include "websocket.h"
-
-#define _CRT_SECURE_NO_WARNINGS
 
 using namespace std;
 

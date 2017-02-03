@@ -10,6 +10,8 @@
 
 #include "GameEntity.h"
 
+#include <map>
+
 class PlayerEntity: public GameEntity {
 public:
 	PlayerEntity();
