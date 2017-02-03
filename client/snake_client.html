@@ -73,14 +73,15 @@
                     log("Connected.");
                     gameBoard.style.display = "block";
 
-                    Server.send("player1", document.getElementById('player1').value);
-                    Server.send("player2", document.getElementById('player2').value);
+                    Server.send("player1", document.getElementById('player1').value +".Player1");
+                    Server.send("player2", document.getElementById('player2').value+".Player2");
                 });
 
                 //OH NOES! Disconnection occurred.
                 Server.bind('close', function (data) {
                     document.getElementById("cntBtn").disabled = false;
                     log("Disconnected.");
+                    Server.send("disconnect", "User has disconnected");
                 });
 
                 //Log any messages sent from server
@@ -147,7 +148,7 @@
                     dir_1 = "right";
                     dir_2 = "right";
                     // Sets default score to 0
-                    p1_score = 99;
+                    p1_score = 0;
                     p2_score = 0;
                     // Creates snake array and food object
                     create_snake();
@@ -159,6 +160,8 @@
 
                     // Updates game every 60 ms
                     game_loop = setInterval(paint_snakes, 60);
+
+
                 }
 
                 init();
@@ -183,11 +186,12 @@
                         x: Math.round(Math.random() * (width - b_size) / b_size),
                         y: Math.round(Math.random() * (height - b_size) / b_size),
                     };
+
                 }
 
                 function paint_snakes() {
                     paint_bg();
-
+;
                     // PLAYER 1 SNAKE
                     var p1x = snake_1[0].x;
                     var p1y = snake_1[0].y;
@@ -207,6 +211,7 @@
                     if (p1x == food.x && p1y == food.y) {
                         var tail_1 = { x: p1x, y: p1y };
                         p1_score++;
+                        getScore();
                         create_food();
                     }
                     else {
@@ -243,6 +248,7 @@
                         var tail_2 = { x: p2x, y: p2y };
                         p2_score++;
                         create_food();
+                        getScore();
                     }
                     else {
                         var tail_2 = snake_2.pop();
@@ -268,6 +274,7 @@
                     map.fillStyle = "black";
                     map.fillText(p1_score_text, 5, height - 5);
                     map.fillText(p2_score_text, width - 100, height - 5);
+
                 }
 
                 function paint(x, y, f_c, s_c) {
@@ -295,12 +302,9 @@
                 }
 
                 // Returns player1 score
-                function getp1_score(){
-                    return p1_score;
-                }
-
-                function getp2_score(){
-                    return p2_score;
+                function getScore(){
+                    Server.send("player1score", p1_score+".P1Score");
+                    Server.send("player2score", p2_score+".P2Score");
                 }
 
                 // Keyboard controls for each player

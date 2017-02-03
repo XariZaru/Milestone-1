@@ -43,9 +43,35 @@ void closeHandler(int clientID){
 
 /* called when a client sends a message to the server */
 void messageHandler(int clientID, string message){
-	cout << message << endl;
+//	cout << message << endl;
 	ostringstream os;
 	os << "Stranger " << clientID << " says: " << message;
+
+	// Set player names
+	std::size_t found = message.find(".Player1");
+	if(found != std::string::npos){
+		player1name = message.substr(0, found);
+		cout << "Player 1: " << player1name << endl;
+	}
+	found = message.find(".Player2");
+	if (found != std::string::npos)
+	{
+		player2name = message.substr(0, found);
+		cout << "Player 2: " << player2name << endl;
+	}
+	// Update scores
+	found = message.find(".P1Score");
+	if (found != std::string::npos)
+	{
+		player1score = stoi(message.substr(0, found));
+		cout << player1name << ": " << player1score << endl;
+	}
+	found = message.find(".P2Score");
+	if (found != std::string::npos)
+	{
+		player2score = stoi(message.substr(0, found));
+		cout << player2name << ": " << player2score << endl;
+	}
 
 	vector<int> clientIDs = server.getClientIDs();
 	for (int i = 0; i < clientIDs.size(); i++){
@@ -64,6 +90,7 @@ void periodicHandler(){
 		string timestring = ctime(&current);
 		timestring = timestring.substr(0, timestring.size() - 1);
 		os << timestring;
+		
 
 		vector<int> clientIDs = server.getClientIDs();
 		for (int i = 0; i < clientIDs.size(); i++)
