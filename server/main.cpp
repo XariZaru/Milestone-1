@@ -9,7 +9,7 @@
 
 using namespace std;
 
-webSocket socket;
+webSocket server;
 
 int player1score = 0;
 int player2score = 0;
@@ -21,12 +21,12 @@ void openHandler(int clientID){
 	ostringstream os;
 	os << "Stranger " << clientID << " has joined.";
 
-	vector<int> clientIDs = socket.getClientIDs();
+	vector<int> clientIDs = server.getClientIDs();
 	for (int i = 0; i < clientIDs.size(); i++){
 		if (clientIDs[i] != clientID)
-			socket.wsSend(clientIDs[i], os.str());
+			server.wsSend(clientIDs[i], os.str());
 	}
-	socket.wsSend(clientID, "Welcome!");
+	server.wsSend(clientID, "Welcome!");
 }
 
 /* called when a client disconnects */
@@ -34,14 +34,14 @@ void closeHandler(int clientID){
 	ostringstream os;
 	os << "Stranger " << clientID << " has leaved.";
 
-	vector<int> clientIDs = socket.getClientIDs();
+	vector<int> clientIDs = server.getClientIDs();
 	for (int i = 0; i < clientIDs.size(); i++){
 		if (clientIDs[i] != clientID)
-			socket.wsSend(clientIDs[i], os.str());
+			server.wsSend(clientIDs[i], os.str());
 	}
 }
 
-/* called when a client sends a message to the socket */
+/* called when a client sends a message to the server */
 void messageHandler(int clientID, string message){
 //	cout << message << endl;
 	ostringstream os;
@@ -73,10 +73,10 @@ void messageHandler(int clientID, string message){
 		cout << player2name << ": " << player2score << endl;
 	}
 
-	vector<int> clientIDs = socket.getClientIDs();
+	vector<int> clientIDs = server.getClientIDs();
 	for (int i = 0; i < clientIDs.size(); i++){
 		if (clientIDs[i] != clientID)
-			socket.wsSend(clientIDs[i], os.str());
+			server.wsSend(clientIDs[i], os.str());
 	}
 
 }
@@ -92,9 +92,9 @@ void periodicHandler(){
 		os << timestring;
 		
 
-		vector<int> clientIDs = socket.getClientIDs();
+		vector<int> clientIDs = server.getClientIDs();
 		for (int i = 0; i < clientIDs.size(); i++)
-			socket.wsSend(clientIDs[i], os.str());
+			server.wsSend(clientIDs[i], os.str());
 
 		next = time(NULL) + 10;
 	}
@@ -107,13 +107,13 @@ int main(int argc, char *argv[]){
 	cin >> port;
 
 	/* set event handler */
-	socket.setOpenHandler(openHandler);
-	socket.setCloseHandler(closeHandler);
-	socket.setMessageHandler(messageHandler);
-	//socket.setPeriodicHandler(periodicHandler);
+	server.setOpenHandler(openHandler);
+	server.setCloseHandler(closeHandler);
+	server.setMessageHandler(messageHandler);
+	//server.setPeriodicHandler(periodicHandler);
 
-	/* start the chatroom socket, listen to ip '127.0.0.1' and port '8000' */
-	socket.startServer(port);
+	/* start the chatroom server, listen to ip '127.0.0.1' and port '8000' */
+	server.startServer(port);
 
 	return 1;
 }
