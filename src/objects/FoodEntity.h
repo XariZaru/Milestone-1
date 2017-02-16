@@ -8,7 +8,7 @@
 #ifndef FOODENTITY_H_
 #define FOODENTITY_H_
 
-#include "../objects/GameEntity.h"
+#include "GameEntity.h"
 
 #include <map>
 
