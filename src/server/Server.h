@@ -9,7 +9,7 @@
 #define SERVER_H_
 
 #include "..\entity\EntityAdministrator.h"
-#include "..\network\PacketHandler.h"
+#include <iostream>
 
 class Server {
 public:
@@ -18,12 +18,12 @@ public:
 	static Server* getInstance();
 
 	EntityAdministrator* getAdministrator();
-	PacketHandler* getPacketHandler();
+
+	void printState();
 
 private:
 	static Server* instance;
 	EntityAdministrator* admin;
-	PacketHandler* packet_handler;
 };
 
 
