@@ -8,7 +8,7 @@
 #ifndef SERVER_H_
 #define SERVER_H_
 
-#include "..\entity\EntityAdministrator.h"
+#include "..\administrator\EntityAdministrator.h"
 #include <iostream>
 
 class Server {

@@ -106,7 +106,6 @@ int main(int argc, char *argv[]){
 
 	Server* gameServer = Server::getInstance();
 	gameServer->printState();
-	gameServer->getAdministrator();
 	cout << "Please set server port: ";
 	cin >> port;
 

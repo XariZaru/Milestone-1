@@ -13,9 +13,6 @@ std::vector<GameEntity> entities;
 EntityAdministrator::EntityAdministrator() : entities(std::vector<GameEntity>()) {
 }
 
-void EntityAdministrator::hello()
-{
-}
 
 std::vector<GameEntity> EntityAdministrator::getEntities()
 {

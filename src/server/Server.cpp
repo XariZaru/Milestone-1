@@ -6,11 +6,26 @@
  */
 
 #include "Server.h"
+#include "..\objects\PlayerEntity.h"
+#include "..\objects\FoodEntity.h"
 
 Server* Server::instance;
 
 Server::Server() {
 	admin = new EntityAdministrator();
+
+	// Delete after. Test cases
+	admin->addEntity(PlayerEntity());
+	admin->addEntity(GameEntity());
+
+	PlayerEntity player = PlayerEntity();
+	std::cout << "Player's type is " << player.getType() << std::endl;
+
+	FoodEntity food = FoodEntity();
+	std::cout << "Food's type is " << food.getType() << std::endl;
+
+	for (GameEntity entity : admin->getEntities())
+		std::cout << entity.getType() << std::endl;
 }
 
 Server::~Server() {

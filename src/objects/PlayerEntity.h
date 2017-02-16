@@ -17,6 +17,10 @@ public:
 	PlayerEntity();
 	virtual ~PlayerEntity();
 
+	GameEntity::EntityType getType() {
+		return GameEntity::PLAYER;
+	}
+
 	int size();
 
 	void grow();

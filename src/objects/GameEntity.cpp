@@ -16,3 +16,8 @@ GameEntity::~GameEntity() {
 	// TODO Auto-generated destructor stub
 }
 
+GameEntity::EntityType GameEntity::getType()
+{
+	return EntityType::GENERAL;
+}
+

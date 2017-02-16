@@ -19,9 +19,8 @@ public:
 
 	bool addEntity(GameEntity& entity) {
 		entities.push_back(entity);
+		return true;
 	}
-
-	void hello();
 
 private:
 	std::vector<GameEntity> entities;
