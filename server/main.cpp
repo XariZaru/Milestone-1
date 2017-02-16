@@ -104,6 +104,9 @@ void periodicHandler(){
 int main(int argc, char *argv[]){
 	int port;
 
+	Server* gameServer = Server::getInstance();
+	gameServer->printState();
+	gameServer->getAdministrator();
 	cout << "Please set server port: ";
 	cin >> port;
 
@@ -115,9 +118,6 @@ int main(int argc, char *argv[]){
 
 	/* start the chatroom server, listen to ip '127.0.0.1' and port '8000' */
 	server.startServer(port);
-
-	Server* gameServer = Server::getInstance();
-	
 
 	return 1;
 }

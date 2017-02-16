@@ -14,7 +14,6 @@
 class Server {
 public:
 	Server();
-	virtual ~Server();
 	static Server* getInstance();
 
 	EntityAdministrator* getAdministrator();
@@ -22,6 +21,7 @@ public:
 	void printState();
 
 private:
+	~Server();
 	static Server* instance;
 	EntityAdministrator* admin;
 };

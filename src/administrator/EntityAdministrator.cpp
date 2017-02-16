@@ -6,12 +6,18 @@
  */
 
 #include "EntityAdministrator.h"
+#include <iostream>
 
-EntityAdministrator::EntityAdministrator() {
-	// TODO Auto-generated constructor stub
+std::vector<GameEntity> entities;
 
+EntityAdministrator::EntityAdministrator() : entities(std::vector<GameEntity>()) {
 }
 
-EntityAdministrator::~EntityAdministrator() {
-	// TODO Auto-generated destructor stub
+void EntityAdministrator::hello()
+{
+}
+
+std::vector<GameEntity> EntityAdministrator::getEntities()
+{
+	return entities;
 }

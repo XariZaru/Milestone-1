@@ -8,7 +8,6 @@
 #include "Server.h"
 
 Server* Server::instance;
-EntityAdministrator* admin;
 
 Server::Server() {
 	admin = new EntityAdministrator();

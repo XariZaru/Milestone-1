@@ -8,11 +8,23 @@
 #ifndef ENTITYADMINISTRATOR_H_
 #define ENTITYADMINISTRATOR_H_
 
+#include <vector>
+#include "..\objects\GameEntity.h"
 
 class EntityAdministrator {
 public:
 	EntityAdministrator();
-	virtual ~EntityAdministrator();
+
+	std::vector<GameEntity> getEntities();
+
+	bool addEntity(GameEntity& entity) {
+		entities.push_back(entity);
+	}
+
+	void hello();
+
+private:
+	std::vector<GameEntity> entities;
 };
 
 
