@@ -16,11 +16,10 @@ class FoodEntity : public GameEntity {
 	FoodEntity();
 	virtual ~FoodEntity();
 
-	std::pair<int, int> position();
-	std::pair<int, int> respawn();
+	std::pair<int, int> getPosition();
 
 private:
-	std::pair<int, int> x_loc, y_loc;
+	std::pair<int, int> location;
 
 };
 
