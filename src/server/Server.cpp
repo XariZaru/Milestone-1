@@ -9,16 +9,13 @@
 
 Server* Server::instance;
 EntityAdministrator* admin;
-PacketHandler* packet_handler;
 
 Server::Server() {
 	admin = new EntityAdministrator();
-	packet_handler = new PacketHandler();
 }
 
 Server::~Server() {
 	delete admin;
-	delete packet_handler;
 	delete Server::instance;
 }
 
@@ -32,6 +29,7 @@ EntityAdministrator* Server::getAdministrator() {
 	return admin;
 }
 
-PacketHandler* Server::getPacketHandler() {
-	return packet_handler;
+void Server::printState()
+{
+	std::cout << "Server ready." << std::endl;
 }

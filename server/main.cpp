@@ -6,6 +6,7 @@
 #include <sstream>
 #include <time.h>
 #include "websocket.h"
+#include "..\src\server\Server.h"
 
 using namespace std;
 
@@ -114,6 +115,9 @@ int main(int argc, char *argv[]){
 
 	/* start the chatroom server, listen to ip '127.0.0.1' and port '8000' */
 	server.startServer(port);
+
+	Server* gameServer = Server::getInstance();
+	
 
 	return 1;
 }
