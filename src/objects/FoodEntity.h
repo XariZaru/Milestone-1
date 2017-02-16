@@ -8,13 +8,18 @@
 #ifndef FOODENTITY_H_
 #define FOODENTITY_H_
 
-#include "../objects/GameEntity.h"
+#include "GameEntity.h"
 
 #include <map>
 
 class FoodEntity : public GameEntity {
+	FoodEntity();
+	virtual ~FoodEntity();
 
+	std::pair<int, int> getPosition();
 
+private:
+	std::pair<int, int> location;
 
 };
 
