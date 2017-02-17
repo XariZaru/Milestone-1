@@ -106,7 +106,7 @@ int main(int argc, char *argv[]){
 	int port;
 
 	Server* gameServer = Server::getInstance();
-	gameServer->start();
+	//gameServer->start();
 	gameServer->printState();
 
 	// Need to put game loop somewhere here afterwards

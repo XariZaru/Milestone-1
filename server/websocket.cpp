@@ -706,6 +706,8 @@ void webSocket::startServer(int port){
 
     struct timeval timeout;
     time_t nextPingTime = time(NULL) + 1;
+
+	// Combine game loop here? It's so messy! And what does some of this even do ...?
     while (FD_ISSET(listenfd, &fds)){
         read_fds = fds;
         timeout.tv_sec = 0;
