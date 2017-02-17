@@ -9,13 +9,18 @@
 #include <iostream>
 
 int length;
+std::string name;
 
-PlayerEntity::PlayerEntity() : direction(std::pair<int, int> {0, 1}), head(std::pair<int, int> {5, 5}) {
-	length = 0;
+PlayerEntity::PlayerEntity(std::string str) : direction(std::pair<int, int> {0, 1}), head(std::pair<int, int> {5, 5}), length(5), name(str) {
 }
 
 PlayerEntity::~PlayerEntity() {
 	// TODO Auto-generated destructor stub
+}
+
+std::string PlayerEntity::getName()
+{
+	return name;
 }
 
 int PlayerEntity::size() {

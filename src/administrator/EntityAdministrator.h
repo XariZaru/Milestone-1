@@ -15,15 +15,19 @@ class EntityAdministrator {
 public:
 	EntityAdministrator();
 
-	std::vector<GameEntity> getEntities();
+	std::vector<GameEntity*> getEntities();
 
 	bool addEntity(GameEntity& entity) {
-		entities.push_back(entity);
+		entities.push_back(&entity);
 		return true;
 	}
 
+	void removeEntity(std::string& name);
+
+	GameEntity* getEntity(std::string& name);
+
 private:
-	std::vector<GameEntity> entities;
+	std::vector<GameEntity*> entities;
 };
 
 

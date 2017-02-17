@@ -23,7 +23,7 @@ void openHandler(int clientID){
 	os << "Stranger " << clientID << " has joined.";
 
 	vector<int> clientIDs = server.getClientIDs();
-	for (int i = 0; i < clientIDs.size(); i++){
+	for (unsigned int i = 0; i < clientIDs.size(); i++){
 		if (clientIDs[i] != clientID)
 			server.wsSend(clientIDs[i], os.str());
 	}
@@ -36,7 +36,7 @@ void closeHandler(int clientID){
 	os << "Stranger " << clientID << " has leaved.";
 
 	vector<int> clientIDs = server.getClientIDs();
-	for (int i = 0; i < clientIDs.size(); i++){
+	for (unsigned int i = 0; i < clientIDs.size(); i++){
 		if (clientIDs[i] != clientID)
 			server.wsSend(clientIDs[i], os.str());
 	}
@@ -75,7 +75,7 @@ void messageHandler(int clientID, string message){
 	}
 
 	vector<int> clientIDs = server.getClientIDs();
-	for (int i = 0; i < clientIDs.size(); i++){
+	for (unsigned int i = 0; i < clientIDs.size(); i++){
 		if (clientIDs[i] != clientID)
 			server.wsSend(clientIDs[i], os.str());
 	}
@@ -94,7 +94,7 @@ void periodicHandler(){
 		
 
 		vector<int> clientIDs = server.getClientIDs();
-		for (int i = 0; i < clientIDs.size(); i++)
+		for (unsigned int i = 0; i < clientIDs.size(); i++)
 			server.wsSend(clientIDs[i], os.str());
 
 		next = time(NULL) + 10;

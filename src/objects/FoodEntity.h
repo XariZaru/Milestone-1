@@ -13,8 +13,16 @@
 #include <map>
 
 class FoodEntity : public GameEntity {
+
+public:
 	FoodEntity();
 	virtual ~FoodEntity();
+
+	EntityType getType() {
+		return EntityType::FOOD;
+	}
+
+	std::string getName();
 
 	std::pair<int, int> getPosition();
 

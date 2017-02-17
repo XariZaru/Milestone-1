@@ -14,12 +14,13 @@
 
 class PlayerEntity: public GameEntity {
 public:
-	PlayerEntity();
+	PlayerEntity(std::string name);
 	virtual ~PlayerEntity();
-
-	GameEntity::EntityType getType() {
-		return GameEntity::PLAYER;
+	EntityType getType() {
+		return EntityType::PLAYER;
 	}
+
+	std::string getName();
 
 	int size();
 
@@ -29,6 +30,7 @@ private:
 	int length;
 	std::pair<int, int> head, tail, direction;
 	std::map<int, std::pair<int, int>> directions;
+	std::string name;
 };
 
 #endif /* PLAYERENTITY_H_ */
