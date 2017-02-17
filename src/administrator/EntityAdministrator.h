@@ -27,7 +27,8 @@ public:
 	}
 
 	void removeEntity(std::string& name);
-	void addPlayer(std::string& name);
+	void removeEntity(int id);
+	void addPlayer(std::string& name, int clientID);
 
 	GameEntity* getEntity(std::string& name);
 

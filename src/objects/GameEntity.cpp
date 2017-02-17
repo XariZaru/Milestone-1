@@ -30,3 +30,8 @@ void GameEntity::changeY(int y_change)
 {
 	position.second += y_change;
 }
+
+int GameEntity::getId()
+{
+	return 999;
+}

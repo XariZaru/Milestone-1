@@ -53,6 +53,7 @@ EntityAdministrator* Server::getAdministrator() {
 void Server::printState()
 {
 	std::cout << "Current game state" << std::endl;
+	std::cout << "Player count: " << admin->getPlayers().size() << std::endl;
 	for (GameEntity* entity : admin->getEntities())
 		std::cout << entity->getName().c_str() << " at location " << entity->getPosition().first << ", " << entity->getPosition().second << std::endl;
 	std::cout <<  std::endl;

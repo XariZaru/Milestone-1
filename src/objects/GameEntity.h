@@ -20,6 +20,7 @@ public:
 	virtual void setPosition(std::pair<int, int>& new_position) ;
 	virtual void changeX(int x_change);
 	virtual void changeY(int y_change);
+	virtual int  getId();
 
 private:
 	std::string name;

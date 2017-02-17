@@ -34,7 +34,10 @@ void openHandler(int clientID){
 /* called when a client disconnects */
 void closeHandler(int clientID){
 	ostringstream os;
-	os << "Stranger " << clientID << " has leaved.";
+	os << "Stranger " << clientID << " has left.";
+	std::cout << "A player has disconnected" << std::endl;
+	Server::getInstance()->getAdministrator()->removeEntity(clientID);
+	Server::getInstance()->printState();
 
 	vector<int> clientIDs = server.getClientIDs();
 	for (unsigned int i = 0; i < clientIDs.size(); i++){
@@ -53,7 +56,7 @@ void messageHandler(int clientID, string message){
 	std::size_t found = message.find(".Player1");
 	if(found != std::string::npos){
 		player1name = message.substr(0, found);
-		Server::getInstance()->getAdministrator()->addPlayer(player1name);
+		Server::getInstance()->getAdministrator()->addPlayer(player1name, clientID);
 		cout << "Player " << (Server::getInstance()->getAdministrator()->getPlayers().size()) << ": " << player1name << endl;
 		Server::getInstance()->printState();
 	}

@@ -11,15 +11,20 @@
 int length;
 std::string name;
 
-PlayerEntity::PlayerEntity(std::string str) : direction(std::pair<int, int> {0, 1}), head(std::pair<int, int> {5, 5}), length(5), name(str) {
+PlayerEntity::PlayerEntity(std::string str, int clientID) : id(clientID), direction(std::pair<int, int> {0, 1}), head(std::pair<int, int> {5, 5}), length(5), name(str) {
 }
 
-PlayerEntity::PlayerEntity(std::string str, std::pair<int, int> pos) : direction(std::pair<int, int> {0, 1}), head(std::pair<int, int> {5, 5}), length(5), name(str) {
+PlayerEntity::PlayerEntity(std::string str, std::pair<int, int> pos, int clientID) : id(clientID), direction(std::pair<int, int> {0, 1}), head(std::pair<int, int> {5, 5}), length(5), name(str) {
 	setPosition(pos);
 }
 
 PlayerEntity::~PlayerEntity() {
 	// TODO Auto-generated destructor stub
+}
+
+int PlayerEntity::getId()
+{
+	return id;
 }
 
 std::string PlayerEntity::getName()

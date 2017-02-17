@@ -49,9 +49,21 @@ void EntityAdministrator::removeEntity(std::string & name)
 		}
 }
 
-void EntityAdministrator::addPlayer(std::string & name)
+void EntityAdministrator::removeEntity(int id)
 {
-	addEntity(*new PlayerEntity(name, std::make_pair(0, getPlayers().size() == 0 ? 0 : 500)));
+	for (std::vector<GameEntity*>::iterator it = entities.begin(); it != entities.end(); it++)
+		if ((*it)->getId() == id) {
+			int index = it - entities.begin();
+			GameEntity* entity = *it;
+			entities.erase(entities.begin() + index);
+			delete entity;
+			break;
+		}
+}
+
+void EntityAdministrator::addPlayer(std::string & name, int clientID)
+{
+	addEntity(*new PlayerEntity(name, std::make_pair(0, getPlayers().size() == 0 ? 0 : 500), clientID));
 }
 
 GameEntity * EntityAdministrator::getEntity(std::string & name)
