@@ -10,6 +10,7 @@
 
 #include "..\administrator\EntityAdministrator.h"
 #include <iostream>
+#include <windows.h>
 
 class Server {
 public:
@@ -19,6 +20,7 @@ public:
 	EntityAdministrator* getAdministrator();
 
 	void printState();
+	void start();
 
 private:
 	~Server();

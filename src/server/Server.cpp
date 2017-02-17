@@ -55,3 +55,16 @@ void Server::printState()
 {
 	std::cout << "Server ready." << std::endl;
 }
+
+void Server::start()
+{
+	SYSTEMTIME st;
+	int prev_time = -60;
+	return;
+	while (true) {
+		GetSystemTime(&st);
+		if (st.wMilliseconds - prev_time >= 60 || st.wMilliseconds - prev_time < 0) {
+			prev_time = st.wMilliseconds;
+		}
+	}
+}

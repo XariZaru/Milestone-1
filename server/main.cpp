@@ -106,16 +106,10 @@ int main(int argc, char *argv[]){
 	int port;
 
 	Server* gameServer = Server::getInstance();
+	gameServer->start();
 	gameServer->printState();
 
-	SYSTEMTIME st;
-	int prev_time = -60;
-	while (true) {
-		GetSystemTime(&st);
-		if (st.wMilliseconds - prev_time >= 60 || st.wMilliseconds - prev_time < 0) {
-			prev_time = st.wMilliseconds;
-		}
-	}
+	// Need to put game loop somewhere here afterwards
 	cout << "Please set server port: ";
 	cin >> port;
 
