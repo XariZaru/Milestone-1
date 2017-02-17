@@ -16,9 +16,16 @@ public:
 	enum EntityType {PLAYER, FOOD, GENERAL};
 	virtual EntityType  getType();
 	virtual std::string getName();
+	virtual std::pair<int, int> getPosition();
+	virtual void setPosition(std::pair<int, int>& new_position);
+	virtual void changeX(int x_change);
+	virtual void changeY(int y_change);
 
 private:
 	std::string name;
+
+friend:
+	std::pair<int, int> position;
 };
 
 #endif /* GAMEENTITY_H_ */

@@ -15,6 +15,7 @@
 class PlayerEntity: public GameEntity {
 public:
 	PlayerEntity(std::string name);
+	PlayerEntity(std::string name, std::pair<int, int> position);
 	virtual ~PlayerEntity();
 	EntityType getType() {
 		return EntityType::PLAYER;
