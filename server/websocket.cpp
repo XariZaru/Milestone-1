@@ -708,20 +708,27 @@ void webSocket::startServer(int port){
 
     struct timeval timeout;
     time_t nextPingTime = time(NULL) + 1;
+	int prev_time = -60;
 
     while (FD_ISSET(listenfd, &fds)){
 
 		SYSTEMTIME st;
-		int prev_time = -60;
 
 		// Game loop
-		while (Server::getInstance()->getAdministrator()->getPlayers().size() == 2) {
+		if (Server::getInstance()->getAdministrator()->getPlayers().size() == 2) {
 
 			GetSystemTime(&st);
-			// Refresh the clients at a 60 ms rate
+			// Refresh the clients at a 60 ms rate and send information out
 			if (st.wMilliseconds - prev_time >= 60 || st.wMilliseconds - prev_time < 0) {
+				std::cout << "Updating at 60 milliseconds" << std::endl;
 				prev_time = st.wMilliseconds;
 			}
+
+			// Calculate server stuff
+
+
+			//
+
         }
 
 		read_fds = fds;
