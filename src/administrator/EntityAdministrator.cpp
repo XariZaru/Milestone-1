@@ -20,20 +20,20 @@ const std::vector<GameEntity*> EntityAdministrator::getEntities()
 	return entities;
 }
 
-const std::vector<GameEntity*> EntityAdministrator::getPlayers()
+const std::vector<PlayerEntity*> EntityAdministrator::getPlayers()
 {
-	std::vector<GameEntity*> players = std::vector<GameEntity*>();
+	std::vector<PlayerEntity*> players = std::vector<PlayerEntity*>();
 	for (GameEntity* entity : entities)
 		if (entity->getType() == GameEntity::EntityType::PLAYER)
-			players.push_back(entity);
+			players.push_back((PlayerEntity*) entity);
 	return players;
 }
 
-GameEntity* EntityAdministrator::getFood()
+FoodEntity* EntityAdministrator::getFood()
 {
 	for (GameEntity* entity : entities)
 		if (entity->getType() == GameEntity::EntityType::FOOD)
-			return entity;
+			return (FoodEntity*) entity;
 	return nullptr;
 }
 
@@ -51,7 +51,7 @@ void EntityAdministrator::removeEntity(std::string & name)
 
 void EntityAdministrator::addPlayer(std::string & name)
 {
-	addEntity(*new PlayerEntity(name));
+	addEntity(*new PlayerEntity(name, std::make_pair(0, getPlayers().size() == 0 ? 0 : 500)));
 }
 
 GameEntity * EntityAdministrator::getEntity(std::string & name)

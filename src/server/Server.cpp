@@ -52,7 +52,10 @@ EntityAdministrator* Server::getAdministrator() {
 
 void Server::printState()
 {
-	std::cout << "Server ready." << std::endl;
+	std::cout << "Current game state" << std::endl;
+	for (GameEntity* entity : admin->getEntities())
+		std::cout << entity->getName().c_str() << " at location " << entity->getPosition().first << ", " << entity->getPosition().second << std::endl;
+	std::cout <<  std::endl;
 }
 
 void Server::start()
@@ -66,4 +69,15 @@ void Server::start()
 			prev_time = st.wMilliseconds;
 		}
 	}
+}
+
+// Restarts the game and sets scores to players to respective areas.
+void Server::restart()
+{
+	// Sets players at respective beginning locations
+	for (int player_number = 0; player_number < admin->getPlayers().size() && player_number < 2; player_number++)
+		admin->getPlayers().at(player_number)->setPosition(std::make_pair(0, 0 + (500 * player_number)));
+
+	// Respawns food at a random location
+	admin->getFood()->respawn();
 }

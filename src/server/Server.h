@@ -21,6 +21,7 @@ public:
 
 	void printState();
 	void start();
+	void restart();
 
 private:
 	~Server();

@@ -55,6 +55,7 @@ void messageHandler(int clientID, string message){
 		player1name = message.substr(0, found);
 		Server::getInstance()->getAdministrator()->addPlayer(player1name);
 		cout << "Player " << (Server::getInstance()->getAdministrator()->getPlayers().size()) << ": " << player1name << endl;
+		Server::getInstance()->printState();
 	}
 
 	/*

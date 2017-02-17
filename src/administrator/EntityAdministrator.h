@@ -11,14 +11,15 @@
 #include <vector>
 #include "..\objects\GameEntity.h"
 #include "..\objects\PlayerEntity.h"
+#include "..\objects\FoodEntity.h"
 
 class EntityAdministrator {
 public:
 	EntityAdministrator();
 
 	const std::vector<GameEntity*> getEntities();
-	const std::vector<GameEntity*> getPlayers();
-	GameEntity* getFood();
+	const std::vector<PlayerEntity*> getPlayers();
+	FoodEntity* getFood();
 
 	bool addEntity(GameEntity& entity) {
 		entities.push_back(&entity);
