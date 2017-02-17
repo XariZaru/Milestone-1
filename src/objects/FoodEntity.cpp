@@ -12,7 +12,7 @@
 std::pair<int, int> location;
 
 FoodEntity::FoodEntity() {
-	location = std::make_pair(rand() % 300, rand() % 300);
+	location = std::make_pair(rand() % 400, rand() % 400);
 };
 
 FoodEntity::~FoodEntity() {
@@ -24,12 +24,12 @@ std::string FoodEntity::getName()
 }
 std::pair<int, int> FoodEntity::getPosition()
 {
-	return std::pair<int, int>();
+	return location;
 }
 std::pair<int, int> FoodEntity::respawn()
 {
 
-	return std::make_pair(rand() % 300, rand() % 300);
+	return location = std::make_pair(rand() % 40, rand() % 400);
 }
 ;
 

@@ -24,7 +24,7 @@ public:
 private:
 	std::string name;
 
-friend:
+protected:
 	std::pair<int, int> position;
 };
 
