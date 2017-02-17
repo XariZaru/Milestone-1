@@ -50,7 +50,7 @@
                     gameBoard.style.display = "block";
 
                     Server.send("player1", document.getElementById('player1').value + ".Player1");
-                    Server.send("player2", document.getElementById('player2').value + ".Player2");
+                    //Server.send("player2", document.getElementById('player2').value + ".Player2");
                 });
 
                 //OH NOES! Disconnection occurred.
@@ -80,9 +80,8 @@
     <center>
         <h1>ICS 167 - MULTIPLAYER SNAKE GAME</h1>
         <h4>By: Wesley Tseng, Alexander Lee, Jonathan Nguyen, Patrick Jose</h4>  
-        Player 1: <input type='text' id="player1" name="player1"> 
+        Player: <input type='text' id="player1" name="player1"> 
         &nbsp
-        Player 2: <input type='text' id="player2" name="player2">
         <br/><br/>
         Server IP: <input type='text' id='ip' name='ip'> 
         &nbsp 

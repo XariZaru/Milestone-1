@@ -49,6 +49,11 @@ void EntityAdministrator::removeEntity(std::string & name)
 		}
 }
 
+void EntityAdministrator::addPlayer(std::string & name)
+{
+	addEntity(*new PlayerEntity(name));
+}
+
 GameEntity * EntityAdministrator::getEntity(std::string & name)
 {
 	for (GameEntity* entity : entities)

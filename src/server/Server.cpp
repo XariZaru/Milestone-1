@@ -15,13 +15,11 @@ Server::Server() {
 	admin = new EntityAdministrator();
 
 	
+	/*
 	// Delete after. Test cases
 	admin->addEntity(*new PlayerEntity("Jon", std::make_pair(0, 0)));
 	admin->addEntity(*new PlayerEntity("Wesley", std::make_pair(0, 500)));
 	admin->addEntity(*new FoodEntity());
-
-	PlayerEntity player = PlayerEntity("George");
-	std::cout << "Player's type name " << player.getName().c_str() << std::endl;
 
 	for (GameEntity* entity : admin->getEntities()) {
 		std::cout << "This is the object's name " << entity->getName().c_str() << " and type " << entity->getType();
@@ -33,6 +31,7 @@ Server::Server() {
 	std::cout << "Retrieved entity with name " << name.c_str() << " " << admin->getEntity(name) << std::endl;
 
 	admin->removeEntity(name);
+	*/
 	
 }
 

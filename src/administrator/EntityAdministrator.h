@@ -10,6 +10,7 @@
 
 #include <vector>
 #include "..\objects\GameEntity.h"
+#include "..\objects\PlayerEntity.h"
 
 class EntityAdministrator {
 public:
@@ -25,6 +26,7 @@ public:
 	}
 
 	void removeEntity(std::string& name);
+	void addPlayer(std::string& name);
 
 	GameEntity* getEntity(std::string& name);
 

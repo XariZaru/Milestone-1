@@ -53,14 +53,11 @@ void messageHandler(int clientID, string message){
 	std::size_t found = message.find(".Player1");
 	if(found != std::string::npos){
 		player1name = message.substr(0, found);
-		cout << "Player 1: " << player1name << endl;
+		Server::getInstance()->getAdministrator()->addPlayer(player1name);
+		cout << "Player " << (Server::getInstance()->getAdministrator()->getPlayers().size()) << ": " << player1name << endl;
 	}
-	found = message.find(".Player2");
-	if (found != std::string::npos)
-	{
-		player2name = message.substr(0, found);
-		cout << "Player 2: " << player2name << endl;
-	}
+
+	/*
 	// Update scores
 	found = message.find(".P1Score");
 	if (found != std::string::npos)
@@ -74,6 +71,7 @@ void messageHandler(int clientID, string message){
 		player2score = stoi(message.substr(0, found));
 		cout << player2name << ": " << player2score << endl;
 	}
+	*/
 
 	vector<int> clientIDs = server.getClientIDs();
 	for (unsigned int i = 0; i < clientIDs.size(); i++){

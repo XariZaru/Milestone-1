@@ -26,6 +26,8 @@
 #include "websocket.h"
 #include "base64.h"
 #include "sha1.h"
+#include <Windows.h>
+#include "..\src\server\Server.h"
 
 using namespace std;
 
@@ -707,43 +709,57 @@ void webSocket::startServer(int port){
     struct timeval timeout;
     time_t nextPingTime = time(NULL) + 1;
 
-	// Combine game loop here? It's so messy! And what does some of this even do ...?
     while (FD_ISSET(listenfd, &fds)){
-        read_fds = fds;
-        timeout.tv_sec = 0;
-        timeout.tv_usec = 10000;
-        if (select(fdmax+1, &read_fds, NULL, NULL, &timeout) > 0){
-            for (int i = 0; i <= fdmax; i++){
-                if (FD_ISSET(i, &read_fds)){
-                    if (i == listenfd){
-                        socklen_t addrlen = sizeof(cli_addr);
-                        int newfd = accept(listenfd, (struct sockaddr*)&cli_addr, &addrlen);
-                        if (newfd != -1 && wsClients.size() == 0){
-                            /* add new client */
-                            wsAddClient(newfd, cli_addr.sin_addr);
-                            printf("New connection from %s on socket %d\n", inet_ntoa(cli_addr.sin_addr), newfd);
-						// Reject connection
+
+		SYSTEMTIME st;
+		int prev_time = -60;
+
+		// Game loop
+		while (Server::getInstance()->getAdministrator()->getPlayers().size() == 2) {
+
+			GetSystemTime(&st);
+			// Refresh the clients at a 60 ms rate
+			if (st.wMilliseconds - prev_time >= 60 || st.wMilliseconds - prev_time < 0) {
+				prev_time = st.wMilliseconds;
+			}
+        }
+
+		read_fds = fds;
+		timeout.tv_sec = 0;
+		timeout.tv_usec = 10000;
+
+		if (select(fdmax + 1, &read_fds, NULL, NULL, &timeout) > 0) {
+			for (int i = 0; i <= fdmax; i++) {
+				if (FD_ISSET(i, &read_fds)) {
+					if (i == listenfd) {
+						socklen_t addrlen = sizeof(cli_addr);
+						int newfd = accept(listenfd, (struct sockaddr*)&cli_addr, &addrlen);
+						if (newfd != -1 && wsClients.size() <= 1) {
+							/* add new client */
+							wsAddClient(newfd, cli_addr.sin_addr);
+							printf("New connection from %s on socket %d\n", inet_ntoa(cli_addr.sin_addr), newfd);
+							// Reject connection
 						}
 						else {
 							printf("Rejected incoming connection because one exists.\r\n");
 						}
-                    }
-                    else {
-                        int nbytes = recv(i, buf, sizeof(buf), 0);
-                        if (socketIDmap.find(i) != socketIDmap.end()){
-                            if (nbytes < 0)
-                                wsSendClientClose(socketIDmap[i], WS_STATUS_PROTOCOL_ERROR);
-                            else if (nbytes == 0)
-                                wsRemoveClient(socketIDmap[i]);
+					}
+					else {
+						int nbytes = recv(i, buf, sizeof(buf), 0);
+						if (socketIDmap.find(i) != socketIDmap.end()) {
+							if (nbytes < 0)
+								wsSendClientClose(socketIDmap[i], WS_STATUS_PROTOCOL_ERROR);
+							else if (nbytes == 0)
+								wsRemoveClient(socketIDmap[i]);
 							else {
-                                if (!wsProcessClient(socketIDmap[i], buf, nbytes))
-                                    wsSendClientClose(socketIDmap[i], WS_STATUS_PROTOCOL_ERROR);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+								if (!wsProcessClient(socketIDmap[i], buf, nbytes))
+									wsSendClientClose(socketIDmap[i], WS_STATUS_PROTOCOL_ERROR);
+							}
+						}
+					}
+				}
+			}
+		}
 
         if (time(NULL) >= nextPingTime){
             wsCheckIdleClients();
