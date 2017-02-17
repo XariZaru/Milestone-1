@@ -29,9 +29,9 @@ Server::Server() {
 		std::cout << entity->getPosition().first << ", " << entity->getPosition().second << std::endl;
 	}
 
-	std::cout << "Retrieved entity with name " << admin->getEntity(std::string("Jon"))->getName().c_str() << std::endl;
-
 	std::string name = "Jon";
+	std::cout << "Retrieved entity with name " << name.c_str() << " " << admin->getEntity(name) << std::endl;
+
 	admin->removeEntity(name);
 	
 }

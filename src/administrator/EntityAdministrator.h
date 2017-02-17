@@ -15,7 +15,9 @@ class EntityAdministrator {
 public:
 	EntityAdministrator();
 
-	std::vector<GameEntity*> getEntities();
+	const std::vector<GameEntity*> getEntities();
+	const std::vector<GameEntity*> getPlayers();
+	GameEntity* getFood();
 
 	bool addEntity(GameEntity& entity) {
 		entities.push_back(&entity);

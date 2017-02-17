@@ -15,9 +15,26 @@ EntityAdministrator::EntityAdministrator() {
 }
 
 
-std::vector<GameEntity*> EntityAdministrator::getEntities()
+const std::vector<GameEntity*> EntityAdministrator::getEntities()
 {
 	return entities;
+}
+
+const std::vector<GameEntity*> EntityAdministrator::getPlayers()
+{
+	std::vector<GameEntity*> players = std::vector<GameEntity*>();
+	for (GameEntity* entity : entities)
+		if (entity->getType() == GameEntity::EntityType::PLAYER)
+			players.push_back(entity);
+	return players;
+}
+
+GameEntity* EntityAdministrator::getFood()
+{
+	for (GameEntity* entity : entities)
+		if (entity->getType() == GameEntity::EntityType::FOOD)
+			return entity;
+	return nullptr;
 }
 
 void EntityAdministrator::removeEntity(std::string & name)
