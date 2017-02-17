@@ -8,18 +8,17 @@
 #ifndef GAMEENTITY_H_
 #define GAMEENTITY_H_
 
+#include <iostream>
+
 class GameEntity {
 public:
 
 	enum EntityType {PLAYER, FOOD, GENERAL};
-
-	GameEntity();
-	virtual ~GameEntity();
-
-	virtual EntityType getType();
+	virtual EntityType  getType();
+	virtual std::string getName();
 
 private:
-	EntityType type;
+	std::string name;
 };
 
 #endif /* GAMEENTITY_H_ */

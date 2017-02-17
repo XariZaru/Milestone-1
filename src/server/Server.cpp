@@ -14,18 +14,23 @@ Server* Server::instance;
 Server::Server() {
 	admin = new EntityAdministrator();
 
+	
 	// Delete after. Test cases
-	admin->addEntity(PlayerEntity());
-	admin->addEntity(GameEntity());
+	admin->addEntity(*new PlayerEntity("John"));
+	admin->addEntity(*new FoodEntity());
 
-	PlayerEntity player = PlayerEntity();
-	std::cout << "Player's type is " << player.getType() << std::endl;
+	PlayerEntity player = PlayerEntity("George");
+	std::cout << "Player's type name " << player.getName().c_str() << std::endl;
 
-	FoodEntity food = FoodEntity();
-	std::cout << "Food's type is " << food.getType() << std::endl;
+	for (GameEntity* entity : admin->getEntities()) {
+		std::cout << "This is the player's name " << entity->getName().c_str() << " and type " << entity->getType() << std::endl;
+	}
 
-	for (GameEntity entity : admin->getEntities())
-		std::cout << entity.getType() << std::endl;
+	std::cout << "Retrieved entity with name John " << admin->getEntity(std::string("John")) << std::endl;
+
+	std::string name = "John";
+	admin->removeEntity(name);
+	
 }
 
 Server::~Server() {

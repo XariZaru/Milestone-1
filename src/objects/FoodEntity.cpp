@@ -16,7 +16,16 @@ FoodEntity::FoodEntity() {
 
 FoodEntity::~FoodEntity() {
 	// DECONSTRUCTOR
-};
+}
+std::string FoodEntity::getName()
+{
+	return "Food";
+}
+std::pair<int, int> FoodEntity::getPosition()
+{
+	return std::pair<int, int>();
+}
+;
 
 std::pair<int, int> getPosition() {
 	return location;
