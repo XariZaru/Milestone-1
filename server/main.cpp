@@ -7,6 +7,7 @@
 #include <time.h>
 #include "websocket.h"
 #include "..\src\server\Server.h"
+#include <Windows.h>
 
 using namespace std;
 
@@ -106,6 +107,15 @@ int main(int argc, char *argv[]){
 
 	Server* gameServer = Server::getInstance();
 	gameServer->printState();
+
+	SYSTEMTIME st;
+	int prev_time = -60;
+	while (true) {
+		GetSystemTime(&st);
+		if (st.wMilliseconds - prev_time >= 60 || st.wMilliseconds - prev_time < 0) {
+			prev_time = st.wMilliseconds;
+		}
+	}
 	cout << "Please set server port: ";
 	cin >> port;
 
