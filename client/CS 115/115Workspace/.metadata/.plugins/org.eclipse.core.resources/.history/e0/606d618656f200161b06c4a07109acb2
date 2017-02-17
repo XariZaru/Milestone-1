@@ -1,0 +1,81 @@
+import com.mesquite.csim.*;
+import com.mesquite.csim.Process;
+import com.mesquite.csim.file.Files;
+import java.io.*;
+import java.util.Random;
+
+
+public class TrainSimulation extends Model
+{
+	private static double totalTime;
+	private static double arrivalRate;
+	private FCFSFacility m_fac;
+	Random random = new Random();
+
+	public static void main(String[] args)
+	{
+		TrainSimulation model = new TrainSimulation();
+		totalTime = Double.parseDouble(args[1]);
+		arrivalRate = Double.parseDouble(args[0]);
+		System.out.println("Arrival rate: "+arrivalRate);
+		System.out.println(args[1]);
+		
+		model.run();
+		model.report();
+		
+	}
+	
+	
+	public TrainSimulation()
+	{
+		super("TrainSumulation");
+	}
+	
+	public void run()
+	{
+		start(new Sim());
+	}
+	// Controls the execution of the model
+	private class Sim extends Process
+	{
+		public Sim()
+		{
+			super("Sim");
+		}
+		public void run()
+		{
+			m_fac = new FCFSFacility("Train dock", 1);
+			add(new Gen());
+//			hold(totalTime);
+			hold(100);
+		}
+	}
+	// Generates the arriving trains (aka Jobs)
+	private class Gen extends Process
+	{
+		public Gen(){
+			super("Gen");
+		}
+		public void run()
+		{
+			while (true){
+				System.out.println("Time "+model.clock() + ": new train generated");
+				add(new Train());
+				hold((-arrivalRate)*Math.log(random.nextDouble()));
+			}
+		}
+	}
+	// Represents the individual entities "using" the server at the facility
+	private class Train extends Process
+	{
+		public Train() {
+			super("Train");
+		}
+		public void run()
+		{
+			System.out.println("Time " + model.clock() + ": train enters either queue or starts unloading");
+			m_fac.use(rand.exponential((random.nextFloat()+3.5)));
+		}
+	}
+
+}

@@ -1,0 +1,10 @@
+
+public class TrainSimulation
+{
+	public static void main(String[] args)
+	{
+		int x, y= 0;
+		System.out.println("x = " + x + " y = " + y);
+	}
+
+}

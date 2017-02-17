@@ -1,0 +1,42 @@
+﻿Build started 2/17/2017 2:46:02 PM.
+     1>Project "C:\Users\Patrick\Documents\College crap\ICS 167\Milestone-1\ICS167\ICS167\ICS167.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\server\base64.cpp ..\..\server\main.cpp ..\..\server\sha1.cpp ..\..\server\websocket.cpp ..\..\src\administrator\EntityAdministrator.cpp ..\..\src\objects\FoodEntity.cpp ..\..\src\objects\GameEntity.cpp ..\..\src\objects\PlayerEntity.cpp ..\..\src\server\Server.cpp
+         Server.cpp
+     1>c:\users\patrick\documents\college crap\ics 167\milestone-1\src\server\server.cpp(79): warning C4018: '<' : signed/unsigned mismatch
+         PlayerEntity.cpp
+         GameEntity.cpp
+         FoodEntity.cpp
+     1>c:\users\patrick\documents\college crap\ics 167\milestone-1\src\objects\foodentity.cpp(16): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\patrick\documents\college crap\ics 167\milestone-1\src\objects\foodentity.cpp(33): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+         EntityAdministrator.cpp
+         websocket.cpp
+     1>c:\users\patrick\documents\college crap\ics 167\milestone-1\server\websocket.cpp(114): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\college crap\ics 167\milestone-1\server\websocket.cpp(128): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\college crap\ics 167\milestone-1\server\websocket.cpp(150): warning C4018: '>=' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\college crap\ics 167\milestone-1\server\websocket.cpp(163): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\patrick\documents\college crap\ics 167\milestone-1\server\websocket.cpp(405): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\college crap\ics 167\milestone-1\server\websocket.cpp(604): warning C4018: '>=' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\college crap\ics 167\milestone-1\server\websocket.cpp(631): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\college crap\ics 167\milestone-1\server\websocket.cpp(645): warning C4018: '>=' : signed/unsigned mismatch
+     1>c:\users\patrick\documents\college crap\ics 167\milestone-1\server\websocket.cpp(775): warning C4018: '<' : signed/unsigned mismatch
+         sha1.cpp
+         main.cpp
+         base64.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Patrick\Documents\College crap\ICS 167\Milestone-1\ICS167\Debug\ICS167.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Patrick\Documents\College crap\ICS 167\Milestone-1\ICS167\Debug\ICS167.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Patrick\Documents\College crap\ICS 167\Milestone-1\ICS167\Debug\ICS167.lib" /MACHINE:X86 Debug\base64.obj
+         Debug\main.obj
+         Debug\sha1.obj
+         Debug\websocket.obj
+         Debug\EntityAdministrator.obj
+         Debug\FoodEntity.obj
+         Debug\GameEntity.obj
+         Debug\PlayerEntity.obj
+         Debug\Server.obj
+         ICS167.vcxproj -> C:\Users\Patrick\Documents\College crap\ICS 167\Milestone-1\ICS167\Debug\ICS167.exe
+     1>Done Building Project "C:\Users\Patrick\Documents\College crap\ICS 167\Milestone-1\ICS167\ICS167\ICS167.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:19.52

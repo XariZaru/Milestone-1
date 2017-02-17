@@ -1,0 +1,19 @@
+
+public class TrainSimulation
+{
+	public static void main(String[] args)
+	{
+		int x = 2, y= 0;
+		System.out.println("x = " + x + " y = " + y);
+		float f = 1.1f;
+		y = (int)f;
+		
+		String name = "Patrick";
+		System.out.println(name.toUpperCase());
+		System.out.println(name);
+		
+		String u = "4" + 3;
+		System.out.println(u);
+	}
+
+}
