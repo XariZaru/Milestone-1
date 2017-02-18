@@ -59,7 +59,6 @@
                     //Autoscroll
                     $log[0].scrollTop = $log[0].scrollHeight - $log[0].clientHeight;
                 } else {
-                    //paint_bg();
                     array_text = text.split(" ");
                     $log = $('#log');
                     //Add text to log
@@ -68,7 +67,9 @@
                     $log[0].scrollTop = $log[0].scrollHeight - $log[0].clientHeight;
 
                     if (document.getElementById('player1').value == array_text[0]) {
-                        paint(parseInt(array_text[1]), parseInt(array_text[2]), "blue", "white");
+						array_text.shift();
+						for (int x = 0; x < array_text.length; x += 2)
+							paint(parseInt(array_text[x]), parseInt(array_text[x + 1]), "blue", "white");
                     }
                         
                 }
