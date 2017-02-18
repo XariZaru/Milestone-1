@@ -716,7 +716,7 @@ void webSocket::startServer(int port){
 		SYSTEMTIME st;
 
 		// Game loop
-		if (Server::getInstance()->getAdministrator()->getPlayers().size() == 2) {
+		if (Server::getInstance()->getAdministrator()->getPlayers().size() == 2 &&  !Server::getInstance()->isPaused()) {
 
 			GetSystemTime(&st);
 			// Refresh the clients at a 60 ms rate and send information out

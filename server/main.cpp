@@ -59,6 +59,7 @@ void messageHandler(int clientID, string message){
 		Server::getInstance()->getAdministrator()->addPlayer(player1name, clientID);
 		cout << "Player " << (Server::getInstance()->getAdministrator()->getPlayers().size()) << ": " << player1name << endl;
 		Server::getInstance()->printState();
+		Server::getInstance()->unpause();
 	} 
 
 	found = message.find(".KEY");
@@ -67,14 +68,20 @@ void messageHandler(int clientID, string message){
 		PlayerEntity* player = Server::getInstance()->getAdministrator()->getPlayer(clientID);
 		if (player == nullptr)
 			return;
-		if (command == "left")
+		bool paused = Server::getInstance()->isPaused();
+		if (command == "left" && !paused)
 			player->setDx(-1);
-		else if (command == "right")
+		else if (command == "right" && !paused)
 			player->setDx(1);
-		else if (command == "up")
+		else if (command == "up" && !paused)
 			player->setDy(-1);
-		else if (command == "down")
+		else if (command == "down" && !paused)
 			player->setDy(1);
+		else if (command == "p")
+			if (Server::getInstance()->isPaused())
+				Server::getInstance()->unpause();
+			else
+				Server::getInstance()->pause();
 	}
 
 	/*

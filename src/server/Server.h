@@ -22,11 +22,17 @@ public:
 	void printState();
 	void run();
 	void restart();
+	void pause();
+	void unpause();
+	boolean isPaused() {
+		return paused;
+	}
 
 private:
 	~Server();
 	static Server* instance;
 	EntityAdministrator* admin;
+	boolean paused = true;
 };
 
 

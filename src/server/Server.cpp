@@ -71,6 +71,7 @@ void Server::printState()
 
 void Server::run()
 {
+	paused = false;
 	for (GameEntity* entity : admin->getEntities()) {
 		entity->update();
 		if (entity->getType() == GameEntity::EntityType::PLAYER) {
@@ -100,4 +101,14 @@ void Server::restart()
 
 	// Respawns food at a random location
 	admin->getFood()->respawn();	
+}
+
+void Server::pause()
+{
+	paused = true;
+}
+
+void Server::unpause()
+{
+	paused = false;
 }
