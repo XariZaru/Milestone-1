@@ -65,9 +65,18 @@
                     //Add text to log
                     //Autoscroll
                     $log[0].scrollTop = $log[0].scrollHeight - $log[0].clientHeight;
-					if (array_text[0] == "CLEAR")
+					if (array_text[0] == "CLEAR"){ 
 						paint_bg();
-                    else if (document.getElementById('player1').value == array_text[0]) {
+					} else if (array_text[0] == "PLAYERSCORE") {
+						array_text.shift();
+						var p1_score_text = ""+ array_text[0] +"'s Score: " + array_text[1];
+						map.fillStyle = "black";
+						if (array_text[0] == document.getElementById('player1').value) {
+							map.fillText(p1_score_text, 5, height - 5);
+						} else {
+							map.fillText(p1_score_text, width - 250, height - 5);
+						}
+                    } else if (document.getElementById('player1').value == array_text[0]) {
 						array_text.shift();
 						for (var x = 0; x < array_text.length; x++) {
 							var coord = array_text[x].split(",");

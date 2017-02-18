@@ -61,6 +61,7 @@ void PlayerEntity::respawn()
 		piece.y = position.second;
 		snake.push_front(piece);
 	}
+	score = 0;
 }
 
 void PlayerEntity::setDx(int pdx)
@@ -97,7 +98,8 @@ int PlayerEntity::size() {
 void PlayerEntity::grow() {
 	length++;
 	SnakePiece piece;
-	piece.x = position.first + dx;
-	piece.y = position.second + dy;
+	piece.x = snake.at(0).x - dx;
+	piece.y = snake.at(0).y - dy;
 	snake.push_front(piece);
+	score++;
 }

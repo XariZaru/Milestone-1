@@ -738,6 +738,13 @@ void webSocket::startServer(int port){
 							
 
 						wsSend(player->getId(), os.str());
+
+						std::vector<PlayerEntity*> players = admin->getPlayers();
+						for (PlayerEntity* p : players) {
+							ostringstream os;
+							os << "PLAYERSCORE " << p->getName().c_str() << " " << p->getScore();
+							wsSend(player->getId(), os.str());
+						}
 					}
 				}
 				prev_time = st.wMilliseconds;

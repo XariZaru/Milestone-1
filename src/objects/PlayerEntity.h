@@ -29,6 +29,12 @@ public:
 	virtual void respawn();
 	void setDx(int dx);
 	void setDy(int dy);
+	void setScore(int value) {
+		score = value;
+	}
+	int getScore() {
+		return score;
+	}
 
 	std::deque<SnakePiece> getPieces();
 
@@ -44,6 +50,7 @@ public:
 
 private:
 	int length, id, dx = 1, dy = 0;
+	int score = 0;
 	std::deque<SnakePiece> snake;
 	std::string name;
 };

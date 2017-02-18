@@ -73,6 +73,14 @@ void Server::run()
 {
 	for (GameEntity* entity : admin->getEntities()) {
 		entity->update();
+		if (entity->getType() == GameEntity::EntityType::PLAYER) {
+			PlayerEntity* player = (PlayerEntity*)entity;
+			FoodEntity* food = admin->getFood();
+			if (player->getPosition().first == food->getPosition().first && player->getPosition().second == food->getPosition().second) {
+				food->respawn();
+				player->grow();
+			}
+		}
 		if (entity->getPosition().first < 0 || entity->getPosition().first > 50 || entity->getPosition().second < 0 || entity->getPosition().second > 50)
 			restart();
 
