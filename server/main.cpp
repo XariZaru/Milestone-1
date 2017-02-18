@@ -108,7 +108,7 @@ int main(int argc, char *argv[]){
 	int port;
 
 	Server* gameServer = Server::getInstance();
-	//gameServer->start();
+	//gameServer->run();
 	gameServer->printState();
 
 	// Need to put game loop somewhere here afterwards
@@ -121,7 +121,7 @@ int main(int argc, char *argv[]){
 	server.setMessageHandler(messageHandler);
 	//server.setPeriodicHandler(periodicHandler);
 
-	/* start the chatroom server, listen to ip '127.0.0.1' and port '8000' */
+	/* run the chatroom server, listen to ip '127.0.0.1' and port '8000' */
 	server.startServer(port);
 
 	return 1;

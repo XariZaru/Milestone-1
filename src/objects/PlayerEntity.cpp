@@ -27,6 +27,12 @@ int PlayerEntity::getId()
 	return id;
 }
 
+void PlayerEntity::update()
+{
+	changeX(dx);
+	changeY(dy);
+}
+
 std::string PlayerEntity::getName()
 {
 	return name;
