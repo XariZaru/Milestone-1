@@ -65,12 +65,19 @@ void PlayerEntity::respawn()
 
 void PlayerEntity::setDx(int pdx)
 {
-	dx = pdx;
+	// Want to change right but going left
+	if (dx == 0) {
+		dx = pdx;
+		dy = 0;
+	}
 }
 
 void PlayerEntity::setDy(int pdy)
 {
-	dy = pdy;
+	if (dy == 0) {
+		dy = pdy;
+		dx = 0;
+	}
 }
 
 std::deque<PlayerEntity::SnakePiece> PlayerEntity::getPieces()

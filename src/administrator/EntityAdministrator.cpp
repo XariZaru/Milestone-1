@@ -73,3 +73,11 @@ GameEntity * EntityAdministrator::getEntity(std::string & name)
 			return entity;
 	return nullptr;
 }
+
+PlayerEntity * EntityAdministrator::getPlayer(int clientID)
+{
+	for (GameEntity* entity : entities)
+		if (entity->getId() == clientID)
+			return (PlayerEntity*)entity;
+	return nullptr;
+}

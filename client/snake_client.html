@@ -72,21 +72,20 @@
 						for (var x = 0; x < array_text.length; x++) {
 							var coord = array_text[x].split(",");
 							paint(parseInt(coord[0]), parseInt(coord[1]), "blue", "white");
-							$log.append(($log.val() ? "\n" : '') + "Moving player " + coord[0] + " " + coord[1]);
+							//$log.append(($log.val() ? "\n" : '') + "Moving player " + coord[0] + " " + coord[1]);
 						}
                     } else if (array_text[0] != "Food") {
 						array_text.shift();
 						for (var x = 0; x < array_text.length; x++) {
 							var coord = array_text[x].split(",");
 							paint(parseInt(coord[0]), parseInt(coord[1]), "red", "white");
-							$log.append(($log.val() ? "\n" : '') + "Moving player " + coord[0] + " " + coord[1]);
+							//$log.append(($log.val() ? "\n" : '') + "Moving player " + coord[0] + " " + coord[1]);
 						}
 					} else if (array_text[0] == "Food") {
 						array_text.shift();
-						var coord = array_text.split(",");
-						$log.append(($log.val() ? "\n" : '') + "Food " + coord);
+						var coord = array_text[0].split(",");
 						paint(parseInt(coord[0]), parseInt(coord[1]), "green", "white");
-						$log.append(($log.val() ? "\n" : '') + "Got food " + coord[0] + " " + coord[1]);
+						//$log.append(($log.val() ? "\n" : '') + "Got food " + coord[0] + " " + coord[1]);
 					}
                 }
             }
@@ -187,31 +186,28 @@
 
 			// Keyboard controls for each player
 			$(document).keydown(function (e) {
+				if (Server == null)
+					return;
 				var key = e.which;
+				var dir_1 = "";
 				// Player 1 uses WSAD
-				if (key == "65" && dir_1 != "right") dir_1 = "left";
-				else if (key == "87" && dir_1 != "down") dir_1 = "up";
-				else if (key == "68" && dir_1 != "left") dir_1 = "right";
-				else if (key == "83" && dir_1 != "up") dir_1 = "down";
-				// Player 2 uses →↑↓←
-				if (key == "37" && dir_2 != "right") dir_2 = "left";
-				else if (key == "38" && dir_2 != "down") dir_2 = "up";
-				else if (key == "39" && dir_2 != "left") dir_2 = "right";
-				else if (key == "40" && dir_2 != "up") dir_2 = "down";
+				if (key == "65") dir_1 = "left";
+				else if (key == "87") dir_1 = "up";
+				else if (key == "68") dir_1 = "right";
+				else if (key == "83") dir_1 = "down";
+				
+				if (dir_1 != "")
+					Server.send(document.getElementById('player1').value, dir_1 + ".KEY");
 			})
 
 		$(document).ready(function () {
 			$log = $('#log');
-			$log.append(($log.val() ? "\n" : '') + "WUT");
 			canvas = document.getElementById("canvas");
 			map = canvas.getContext("2d");
 			width = document.getElementById('canvas').width;
 			height = document.getElementById('canvas').height;
-			$log.append(($log.val() ? "\n" : '') + "WUT");
 			b_size = 10;
-			$log.append(($log.val() ? "\n" : '') + "WUT");
 			paint_bg();
-			$log.append(($log.val() ? "\n" : '') + "WUT");
             })
         </script>
     </center>

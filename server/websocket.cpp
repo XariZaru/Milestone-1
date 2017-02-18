@@ -729,7 +729,7 @@ void webSocket::startServer(int port){
 						ostringstream os;
 						os << entity->getName().c_str();
 						if (entity->getType() != GameEntity::EntityType::PLAYER) {
-							os << " " << entity->getPosition().first << " " << entity->getPosition().second;
+							os << " " << entity->getPosition().first << "," << entity->getPosition().second;
 						} else {
 							PlayerEntity* player = (PlayerEntity*) entity;
 							for (PlayerEntity::SnakePiece& piece : player->getPieces())

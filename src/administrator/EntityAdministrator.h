@@ -31,6 +31,7 @@ public:
 	void addPlayer(std::string& name, int clientID);
 
 	GameEntity* getEntity(std::string& name);
+	PlayerEntity* getPlayer(int clientID);
 
 private:
 	std::vector<GameEntity*> entities;
