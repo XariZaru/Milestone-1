@@ -5,33 +5,9 @@
     <title>ICS 167: Multiplayer Snake Game</title>
 
     <style>
-        input, textarea {
-            border: 1px solid #CCC;
-            margin: 0px;
-            padding: 0px;
-        }
-
-        #ip {
-            line-height: 20px;
-        }
-
-        #port {
-            line-height: 20px;
-        }
-
-        #body {
-            max-width: 800px;
-            margin: auto;
-        }
-
         #log {
-            width: 100%;
-            height: 400px;
-        }
-
-        #message {
-            width: 100%;
-            height: 20px;
+            width: 495px;
+            height: 150px;
         }
     </style>
 
@@ -67,7 +43,7 @@
             }
 
             function connect() {
-                log('Connecting...');
+                log('Attempting to Connect...');
                 Server = new SnakeSocket('ws://' + document.getElementById('ip').value + ':' + document.getElementById('port').value);
 
                 $('#message').keypress(function (e) {
@@ -111,27 +87,27 @@
     <center>
         <h1>ICS 167 - MULTIPLAYER SNAKE GAME</h1>
         <h4>By: Wesley Tseng, Alexander Lee, Jonathan Nguyen, Patrick Jose</h4>
-        <h4>test</h4>
+
         <!-- Server IP and Port Input Fields -->
-        Player 1: <input type='text' id="player1" name="player1">
-        <br />
+        Player Name: <input type='text' id="player1" name="player1">
+        <br/><br />
+        
         Server IP: <input type='text' id='ip' name='ip'>
         Server Port: <input type='text' id='port' name='port'>
-        <br />
-        <!-- Creates "Connect" button (INCOMPLETE) -->
+        <br/><br />
+
+        <!-- Creates "Connect" button -->
         <button type="button" id="cntBtn" onclick="connect();">Connect</button>
         <h5></h5>
 
+        <!-- Console-->
+        <textarea style="background-color:black; color:green;" id='log' name='log' readonly='readonly'></textarea><br/>
+
         <!-- Creates game canvas and Javascript text -->
         <div id="game" style="display:none">
-            <canvas id="canvas" width="400" height="500"></canvas>
+            <canvas id="canvas" width="500" height="500"></canvas>
         </div>
 
-        <!-- Console-->
-        <textarea style="background-color:black; color:green;" id='log' name='log' readonly='readonly'></textarea><br />
-        <input type='text' id='message' name='message' />
-
-       
         <script type="text/javascript">
             $(document).ready(function () {
                 var canvas = document.getElementById("canvas");
@@ -289,6 +265,7 @@
 
                 }
 
+                // Paints Cube object given coordinates and color
                 function paint(x, y, f_c, s_c) {
                     map.fillStyle = f_c;
                     map.fillRect(x * b_size, y * b_size, b_size, b_size);
@@ -296,6 +273,7 @@
                     map.strokeRect(x * b_size, y * b_size, b_size, b_size);
                 }
 
+                // Paints Background of Canvvas
                 function paint_bg() {
                     map.fillStyle = "white";
                     map.fillRect(0, 0, width, height);
