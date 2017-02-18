@@ -61,6 +61,10 @@ void Server::printState()
 
 void Server::run()
 {
+}
+
+void Server::run()
+{
 	for (GameEntity* player : admin->getEntities()) {
 		player->update();
 		if (player->getPosition().first < 0 || player->getPosition().first > 500 || player->getPosition().second < 0 || player->getPosition().second > 500) {
