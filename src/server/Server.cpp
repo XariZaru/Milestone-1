@@ -86,7 +86,7 @@ void Server::restart()
 	// Sets players at respective beginning locations
 	std::vector<PlayerEntity*> players = admin->getPlayers();
 	for (int player_number = 0; player_number < players.size() && player_number < 2; player_number++) {
-		players.at(player_number)->setPosition(std::make_pair(0, 0 + (500 * player_number)));
+		players.at(player_number)->setPosition(std::make_pair(0, 0 + (50 * player_number)));
 		players.at(player_number)->respawn();
 	}
 

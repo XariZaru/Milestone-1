@@ -43,7 +43,7 @@ public:
 	void grow();
 
 private:
-	int length, id, dx = 10, dy = 0;
+	int length, id, dx = 1, dy = 0;
 	std::deque<SnakePiece> snake;
 	std::string name;
 };
