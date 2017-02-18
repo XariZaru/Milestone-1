@@ -52,8 +52,8 @@ void PlayerEntity::update()
 			piece.y = snake.at(x - 1).previous_coordinate.second;
 		}
 		else {
-			piece.x += dx;
-			piece.y += dy;
+			piece.x = position.first;
+			piece.y = position.second;
 		}
 	}
 }
@@ -104,7 +104,6 @@ int PlayerEntity::size() {
 }
 
 void PlayerEntity::grow() {
-	length++;
 	SnakePiece piece;
 	piece.x = snake.at(snake.size() - 1).x - dx;
 	piece.y = snake.at(snake.size() - 1).y - dy;

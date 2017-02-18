@@ -63,7 +63,7 @@ void EntityAdministrator::removeEntity(int id)
 
 void EntityAdministrator::addPlayer(std::string & name, int clientID)
 {
-	addEntity(*new PlayerEntity(name, std::make_pair(5, getPlayers().size() == 0 ? 0 : 49), clientID));
+	addEntity(*new PlayerEntity(name, std::make_pair(0, getPlayers().size() == 0 ? 0 : 49), clientID));
 }
 
 GameEntity * EntityAdministrator::getEntity(std::string & name)

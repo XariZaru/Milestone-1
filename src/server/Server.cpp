@@ -76,9 +76,8 @@ void Server::run()
 		if (entity->getType() == GameEntity::EntityType::PLAYER) {
 			PlayerEntity* player = (PlayerEntity*)entity;
 			FoodEntity* food = admin->getFood();
-			PlayerEntity::SnakePiece& piece = player->getPieces().at(0);
-			if (piece.x == food->getPosition().first && piece.y == food->getPosition().second) {											
-				food->respawn();
+			if (player->getPosition().first == food->getPosition().first && player->getPosition().second == food->getPosition().second) {		
+				admin->getFood()->respawn();
 				player->grow();
 			}
 		}
@@ -86,7 +85,7 @@ void Server::run()
 			restart();
 
 	}
-	printState();
+	//printState();
 }
 
 // Restarts the game and sets scores to players to respective areas.
@@ -95,7 +94,7 @@ void Server::restart()
 	// Sets players at respective beginning locations
 	std::vector<PlayerEntity*> players = admin->getPlayers();
 	for (int player_number = 0; player_number < players.size() && player_number < 2; player_number++) {
-		players.at(player_number)->setPosition(std::make_pair(5, 0 + (49 * player_number)));
+		players.at(player_number)->setPosition(std::make_pair(0, 0 + (49 * player_number)));
 		players.at(player_number)->respawn();
 	}
 
