@@ -21,7 +21,6 @@ public:
 	virtual void changeX(int x_change);
 	virtual void changeY(int y_change);
 	virtual int  getId();
-	virtual void update();
 
 private:
 	std::string name;

@@ -35,7 +35,3 @@ int GameEntity::getId()
 {
 	return 999;
 }
-
-void GameEntity::update()
-{
-}

@@ -720,7 +720,7 @@ void webSocket::startServer(int port){
 			GetSystemTime(&st);
 			// Refresh the clients at a 60 ms rate and send information out
 			if (st.wMilliseconds - prev_time >= 60 || st.wMilliseconds - prev_time < 0) {
-				Server::getInstance()->run();
+				std::cout << "Updating at 60 milliseconds" << std::endl;
 				prev_time = st.wMilliseconds;
 			}
 

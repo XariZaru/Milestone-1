@@ -13,7 +13,7 @@ Server* Server::instance;
 
 Server::Server() {
 	admin = new EntityAdministrator();
-	admin->addEntity(*new FoodEntity());
+
 	
 	/*
 	// Delete after. Test cases
@@ -59,39 +59,26 @@ void Server::printState()
 	std::cout <<  std::endl;
 }
 
-void Server::run()
+void Server::start()
 {
-}
-
-void Server::run()
-{
-	for (GameEntity* player : admin->getEntities()) {
-		player->update();
-		if (player->getPosition().first < 0 || player->getPosition().first > 500 || player->getPosition().second < 0 || player->getPosition().second > 500) {
-			restart();
+	SYSTEMTIME st;
+	int prev_time = -60;
+	return;
+	while (true) {
+		GetSystemTime(&st);
+		if (st.wMilliseconds - prev_time >= 60 || st.wMilliseconds - prev_time < 0) {
+			prev_time = st.wMilliseconds;
 		}
 	}
-	printState();
 }
 
 // Restarts the game and sets scores to players to respective areas.
 void Server::restart()
 {
-	try {
-		// Sets players at respective beginning locations
-		int y_location = 0;
-		for (PlayerEntity* entity : admin->getPlayers()) {
-			entity->setPosition(std::make_pair(0, y_location));
-			y_location += 500;
-		}
+	// Sets players at respective beginning locations
+	for (int player_number = 0; player_number < admin->getPlayers().size() && player_number < 2; player_number++)
+		admin->getPlayers().at(player_number)->setPosition(std::make_pair(0, 0 + (500 * player_number)));
 
-		std::cout << "OUT OF LOOP" << std::endl;
-		// Respawns food at a random location
-		FoodEntity* food = admin->getFood();
-		if (food != nullptr)
-			admin->getFood()->respawn();
-	}
-	catch (const std::exception& e) {
-		std:: cout << e.what() << std::endl;
-	}
+	// Respawns food at a random location
+	admin->getFood()->respawn();
 }
