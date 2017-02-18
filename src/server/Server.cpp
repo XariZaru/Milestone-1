@@ -13,7 +13,7 @@ Server* Server::instance;
 
 Server::Server() {
 	admin = new EntityAdministrator();
-
+	admin->addEntity(*new FoodEntity());
 	
 	/*
 	// Delete after. Test cases
@@ -83,7 +83,9 @@ void Server::restart()
 
 		std::cout << "OUT OF LOOP" << std::endl;
 		// Respawns food at a random location
-		//admin->getFood()->respawn();
+		FoodEntity* food = admin->getFood();
+		if (food != nullptr)
+			admin->getFood()->respawn();
 	}
 	catch (const std::exception& e) {
 		std:: cout << e.what() << std::endl;
