@@ -67,7 +67,6 @@ void messageHandler(int clientID, string message){
 		PlayerEntity* player = Server::getInstance()->getAdministrator()->getPlayer(clientID);
 		if (player == nullptr)
 			return;
-		std::cout << command << std::endl;
 		if (command == "left")
 			player->setDx(-1);
 		else if (command == "right")

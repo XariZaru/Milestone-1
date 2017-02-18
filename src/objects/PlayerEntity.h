@@ -16,9 +16,16 @@
 class PlayerEntity: public GameEntity {
 public:
 
+	struct Direction {
+		int dx = 0, dy = 0;
+	};
+
 	struct SnakePiece {
 		int x;
 		int y;
+		Direction head;
+		Direction tail;
+
 	};
 
 	PlayerEntity(std::string name, int clientID);

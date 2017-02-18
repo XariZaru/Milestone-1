@@ -85,7 +85,7 @@ void Server::run()
 			restart();
 
 	}
-	printState();
+	//printState();
 }
 
 // Restarts the game and sets scores to players to respective areas.
@@ -100,5 +100,4 @@ void Server::restart()
 
 	// Respawns food at a random location
 	admin->getFood()->respawn();	
-	std::cout << "RESPAWNING " << std::endl;
 }
