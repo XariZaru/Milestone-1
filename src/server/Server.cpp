@@ -13,6 +13,7 @@ Server* Server::instance;
 
 Server::Server() {
 	admin = new EntityAdministrator();
+	admin->addEntity(*new FoodEntity());
 
 	
 	/*
@@ -59,16 +60,12 @@ void Server::printState()
 	std::cout <<  std::endl;
 }
 
-void Server::start()
+void Server::run()
 {
-	SYSTEMTIME st;
-	int prev_time = -60;
-	return;
-	while (true) {
-		GetSystemTime(&st);
-		if (st.wMilliseconds - prev_time >= 60 || st.wMilliseconds - prev_time < 0) {
-			prev_time = st.wMilliseconds;
-		}
+	for (GameEntity* entity : admin->getEntities()) {
+		entity->update();
+		if (entity->getPosition().first < 0 || entity->getPosition().first > 500 || entity->getPosition().second < 0 || entity->getPosition().second > 500)
+			restart();
 	}
 }
 

@@ -20,7 +20,7 @@ public:
 	EntityAdministrator* getAdministrator();
 
 	void printState();
-	void start();
+	void run();
 	void restart();
 
 private:
