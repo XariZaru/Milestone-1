@@ -726,7 +726,16 @@ void webSocket::startServer(int port){
 				for (PlayerEntity* player : admin->getPlayers()) {
 					for (GameEntity* entity : admin->getEntities()) {
 						ostringstream os;
-						os << entity->getName().c_str() << " " << entity->getPosition().first << " " << entity->getPosition().second;
+						os << entity->getName().c_str();
+						if (entity->getType() != GameEntity::EntityType::PLAYER) {
+							os << " " << entity->getPosition().first << " " << entity->getPosition().second;
+						} else {
+							PlayerEntity* player = (PlayerEntity*) entity;
+							for (PlayerEntity::SnakePiece& piece : player->getPieces())
+								os << " " << piece.x << "," << piece.y;
+						}
+							
+
 						wsSend(player->getId(), os.str());
 					}
 				}

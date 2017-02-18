@@ -29,10 +29,9 @@ std::pair<int, int> FoodEntity::getPosition()
 {
 	return location;
 }
-std::pair<int, int> FoodEntity::respawn() {
+void FoodEntity::respawn() {
 	srand(time(NULL));
 	location = std::make_pair(rand() % 400, rand() % 400);
-	return location;
 }
 
 std::pair<int, int> getPosition() {

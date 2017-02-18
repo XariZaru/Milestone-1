@@ -55,8 +55,17 @@ void Server::printState()
 {
 	std::cout << "Current game state" << std::endl;
 	std::cout << "Player count: " << admin->getPlayers().size() << std::endl;
-	for (GameEntity* entity : admin->getEntities())
-		std::cout << entity->getName().c_str() << " at location " << entity->getPosition().first << ", " << entity->getPosition().second << std::endl;
+	for (GameEntity* entity : admin->getEntities()) {
+		std::cout << entity->getName().c_str() << " at location " << entity->getPosition().first << ", " << entity->getPosition().second;
+		if (entity->getType() == GameEntity::EntityType::PLAYER) {
+			std::cout << " with pieces at coordinates [";
+			PlayerEntity* player = (PlayerEntity*) entity;
+			for (PlayerEntity::SnakePiece& piece : player->getPieces())
+				std::cout << "(" << piece.x << " " << piece.y << "), ";
+			std::cout << "]";
+		}
+		std::cout << std::endl;
+	}
 	std::cout <<  std::endl;
 }
 
@@ -75,8 +84,11 @@ void Server::run()
 void Server::restart()
 {
 	// Sets players at respective beginning locations
-	for (int player_number = 0; player_number < admin->getPlayers().size() && player_number < 2; player_number++)
-		admin->getPlayers().at(player_number)->setPosition(std::make_pair(0, 0 + (500 * player_number)));
+	std::vector<PlayerEntity*> players = admin->getPlayers();
+	for (int player_number = 0; player_number < players.size() && player_number < 2; player_number++) {
+		players.at(player_number)->setPosition(std::make_pair(0, 0 + (500 * player_number)));
+		players.at(player_number)->respawn();
+	}
 
 	// Respawns food at a random location
 	admin->getFood()->respawn();

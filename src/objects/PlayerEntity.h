@@ -10,17 +10,28 @@
 
 #include "GameEntity.h"
 
+#include <deque>
 #include <map>
 
 class PlayerEntity: public GameEntity {
 public:
+
+	struct SnakePiece {
+		int x;
+		int y;
+	};
+
 	PlayerEntity(std::string name, int clientID);
 	PlayerEntity(std::string name, std::pair<int, int> position, int clientID);
 	virtual ~PlayerEntity();
 	virtual int getId();
 	virtual void update();
+	virtual void respawn();
 	void setDx(int dx);
 	void setDy(int dy);
+
+	std::deque<SnakePiece> getPieces();
+
 	EntityType getType() {
 		return EntityType::PLAYER;
 	}
@@ -33,8 +44,7 @@ public:
 
 private:
 	int length, id, dx = 10, dy = 0;
-	std::pair<int, int> head, tail, direction;
-	std::map<int, std::pair<int, int>> directions;
+	std::deque<SnakePiece> snake;
 	std::string name;
 };
 

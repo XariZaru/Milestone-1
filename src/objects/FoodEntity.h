@@ -25,7 +25,7 @@ public:
 	std::string getName();
 
 	std::pair<int, int> getPosition();
-	std::pair<int, int> respawn();
+	virtual void respawn();
 
 private:
 	std::pair<int, int> location;

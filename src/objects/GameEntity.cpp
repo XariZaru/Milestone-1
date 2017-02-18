@@ -39,3 +39,7 @@ int GameEntity::getId()
 void GameEntity::update()
 {
 }
+
+void GameEntity::respawn()
+{
+}

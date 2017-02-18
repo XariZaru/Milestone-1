@@ -11,11 +11,23 @@
 int length;
 std::string name;
 
-PlayerEntity::PlayerEntity(std::string str, int clientID) : id(clientID), direction(std::pair<int, int> {0, 1}), head(std::pair<int, int> {5, 5}), length(5), name(str) {
+PlayerEntity::PlayerEntity(std::string str, int clientID) : id(clientID), length(5), name(str), snake(std::deque<SnakePiece>()) {
+	for (int x = 0; x < length; x++) {
+		SnakePiece piece;
+		piece.x = position.first + x;
+		piece.y = position.second;
+		snake.push_back(piece);
+	}
 }
 
-PlayerEntity::PlayerEntity(std::string str, std::pair<int, int> pos, int clientID) : id(clientID), direction(std::pair<int, int> {0, 1}), head(std::pair<int, int> {5, 5}), length(5), name(str) {
+PlayerEntity::PlayerEntity(std::string str, std::pair<int, int> pos, int clientID) : id(clientID), length(5), name(str), snake(std::deque<SnakePiece>()) {
 	setPosition(pos);
+	for (int x = 0; x < length; x++) {
+		SnakePiece piece;
+		piece.x = position.first + x;
+		piece.y = position.second;
+		snake.push_back(piece);
+	}
 }
 
 PlayerEntity::~PlayerEntity() {
@@ -31,6 +43,24 @@ void PlayerEntity::update()
 {
 	changeX(dx);
 	changeY(dy);
+
+	for (SnakePiece& piece : snake) {
+		piece.x += dx;
+		piece.y += dy;
+	}
+}
+
+void PlayerEntity::respawn()
+{
+	dx = 10;
+	dy = 0;
+	snake = std::deque<SnakePiece>();
+	for (int x = 0; x < length; x++) {
+		SnakePiece piece;
+		piece.x = position.first + x;
+		piece.y = position.second;
+		snake.push_back(piece);
+	}
 }
 
 void PlayerEntity::setDx(int pdx)
@@ -43,6 +73,11 @@ void PlayerEntity::setDy(int pdy)
 	dy = pdy;
 }
 
+std::deque<PlayerEntity::SnakePiece> PlayerEntity::getPieces()
+{
+	return snake;
+}
+
 std::string PlayerEntity::getName()
 {
 	return name;
@@ -53,6 +88,9 @@ int PlayerEntity::size() {
 }
 
 void PlayerEntity::grow() {
-	head.first += direction.first; head.second += direction.second;
 	length++;
+	SnakePiece piece;
+	piece.x = position.first + dx;
+	piece.y = position.second + dy;
+	snake.push_front(piece);
 }

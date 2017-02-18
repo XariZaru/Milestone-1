@@ -22,6 +22,7 @@ public:
 	virtual void changeY(int y_change);
 	virtual int  getId();
 	virtual void update();
+	virtual void respawn();
 
 private:
 	std::string name;
