@@ -66,7 +66,9 @@ void Server::run()
 		entity->update();
 		if (entity->getPosition().first < 0 || entity->getPosition().first > 500 || entity->getPosition().second < 0 || entity->getPosition().second > 500)
 			restart();
+
 	}
+	printState();
 }
 
 // Restarts the game and sets scores to players to respective areas.

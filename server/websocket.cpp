@@ -28,6 +28,7 @@
 #include "sha1.h"
 #include <Windows.h>
 #include "..\src\server\Server.h"
+#include <sstream>
 
 using namespace std;
 
@@ -720,7 +721,15 @@ void webSocket::startServer(int port){
 			GetSystemTime(&st);
 			// Refresh the clients at a 60 ms rate and send information out
 			if (st.wMilliseconds - prev_time >= 60 || st.wMilliseconds - prev_time < 0) {
+				EntityAdministrator* admin = Server::getInstance()->getAdministrator();
 				Server::getInstance()->run();
+				for (PlayerEntity* player : admin->getPlayers()) {
+					for (GameEntity* entity : admin->getEntities()) {
+						ostringstream os;
+						os << entity->getName().c_str() << " " << entity->getPosition().first << " " << entity->getPosition().second;
+						wsSend(player->getId(), os.str());
+					}
+				}
 				prev_time = st.wMilliseconds;
 			}
 
@@ -741,7 +750,7 @@ void webSocket::startServer(int port){
 					if (i == listenfd) {
 						socklen_t addrlen = sizeof(cli_addr);
 						int newfd = accept(listenfd, (struct sockaddr*)&cli_addr, &addrlen);
-						if (newfd != -1 && wsClients.size() <= 1) {
+						if (newfd != -1 && Server::getInstance()->getAdministrator()->getPlayers().size() <= 1) {
 							/* add new client */
 							wsAddClient(newfd, cli_addr.sin_addr);
 							printf("New connection from %s on socket %d\n", inet_ntoa(cli_addr.sin_addr), newfd);
