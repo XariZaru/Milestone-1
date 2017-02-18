@@ -69,17 +69,21 @@
 						paint_bg();
                     else if (document.getElementById('player1').value == array_text[0]) {
 						array_text.shift();
-						for (var x = 0; x < array_text.length; x += 2) {
-							paint(parseInt(array_text[x])/10, parseInt(array_text[x + 1])/10, "blue", "white");
-							$log.append(($log.val() ? "\n" : '') + "Moving player " + array_text[x] + " " + array_text[x+1]);
+						for (var x = 0; x < array_text.length; x++) {
+							var coord = array_text[x].split(",");
+							paint(parseInt(coord[0]), parseInt(coord[1]), "blue", "white");
+							$log.append(($log.val() ? "\n" : '') + "Moving player " + coord[0] + " " + coord[1]);
 						}
                     } else if (array_text[0] != "Food") {
 						array_text.shift();
-						for (var x = 0; x < array_text.length; x += 2) {
-							paint(parseInt(array_text[x])/10, parseInt(array_text[x + 1])/10, "red", "white");
+						for (var x = 0; x < array_text.length; x++) {
+							var coord = array_text[x].split(",");
+							paint(parseInt(coord[0]), parseInt(coord[1]), "blue", "white");
+							$log.append(($log.val() ? "\n" : '') + "Moving player " + coord[0] + " " + coord[1]);
 						}
 					} else if (array_text[0] == "Food") {
-						paint(parseInt(array_text[1])/10, parseInt(array_text[2])/10, "green", "white");
+						var coord = array_text[x].split(",");
+						paint(parseInt(coord[0]), parseInt(coord[1]), "green", "white");
 					}
                 }
             }

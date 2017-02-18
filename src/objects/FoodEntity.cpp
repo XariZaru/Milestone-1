@@ -14,7 +14,7 @@ std::pair<int, int> location;
 
 FoodEntity::FoodEntity() {
 	srand(time(NULL));
-	location = std::make_pair(rand() % 400, rand() % 400);
+	location = std::make_pair(rand() % 50, rand() % 50);
 	std::cout << "Creating food entity with " << location.first << " " << location.second << std::endl;
 }
 
@@ -31,7 +31,7 @@ std::pair<int, int> FoodEntity::getPosition()
 }
 void FoodEntity::respawn() {
 	srand(time(NULL));
-	location = std::make_pair(rand() % 400, rand() % 400);
+	location = std::make_pair(rand() % 50, rand() % 50);
 }
 
 std::pair<int, int> getPosition() {

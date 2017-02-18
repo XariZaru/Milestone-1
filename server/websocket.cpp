@@ -709,7 +709,7 @@ void webSocket::startServer(int port){
 
     struct timeval timeout;
     time_t nextPingTime = time(NULL) + 1;
-	int prev_time = -500;
+	int prev_time = -200;
 
     while (FD_ISSET(listenfd, &fds)){
 
@@ -720,7 +720,7 @@ void webSocket::startServer(int port){
 
 			GetSystemTime(&st);
 			// Refresh the clients at a 60 ms rate and send information out
-			if (st.wMilliseconds - prev_time >= 500 || st.wMilliseconds - prev_time < 0) {
+			if (st.wMilliseconds - prev_time >= 200 || st.wMilliseconds - prev_time < 0) {
 				EntityAdministrator* admin = Server::getInstance()->getAdministrator();
 				Server::getInstance()->run();
 				for (PlayerEntity* player : admin->getPlayers()) {

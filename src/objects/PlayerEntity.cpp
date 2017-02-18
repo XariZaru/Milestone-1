@@ -22,11 +22,11 @@ PlayerEntity::PlayerEntity(std::string str, int clientID) : id(clientID), length
 
 PlayerEntity::PlayerEntity(std::string str, std::pair<int, int> pos, int clientID) : id(clientID), length(5), name(str), snake(std::deque<SnakePiece>()) {
 	setPosition(pos);
-	for (int x = 0; x < length; x++) {
+	for (int x = 5; x >= 0; x--) {
 		SnakePiece piece;
-		piece.x = position.first + x;
+		piece.x = position.first - x;
 		piece.y = position.second;
-		snake.push_back(piece);
+		snake.push_front(piece);
 	}
 }
 
@@ -52,7 +52,7 @@ void PlayerEntity::update()
 
 void PlayerEntity::respawn()
 {
-	dx = 10;
+	dx = 1;
 	dy = 0;
 	snake = std::deque<SnakePiece>();
 	for (int x = 0; x < length; x++) {

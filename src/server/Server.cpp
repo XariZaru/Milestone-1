@@ -73,7 +73,7 @@ void Server::run()
 {
 	for (GameEntity* entity : admin->getEntities()) {
 		entity->update();
-		if (entity->getPosition().first < 0 || entity->getPosition().first > 500 || entity->getPosition().second < 0 || entity->getPosition().second > 500)
+		if (entity->getPosition().first < 0 || entity->getPosition().first > 50 || entity->getPosition().second < 0 || entity->getPosition().second > 50)
 			restart();
 
 	}
@@ -86,7 +86,7 @@ void Server::restart()
 	// Sets players at respective beginning locations
 	std::vector<PlayerEntity*> players = admin->getPlayers();
 	for (int player_number = 0; player_number < players.size() && player_number < 2; player_number++) {
-		players.at(player_number)->setPosition(std::make_pair(0, 0 + (500 * player_number)));
+		players.at(player_number)->setPosition(std::make_pair(5, 0 + (50 * player_number)));
 		players.at(player_number)->respawn();
 	}
 
