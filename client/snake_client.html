@@ -42,15 +42,23 @@
             var Server;
 
             function log(text) {
-				if (text.charAt(0) == "1") {
-					
-				} else if (text.charAt(0) == "2") {
-				} else {
+				// Special character ! denotes regular messages from information
+				if (text.charAt(0) == "!") {
 					$log = $('#log');
 					//Add text to log
-					$log.append(($log.val() ? "\n" : '') + text);
+					$log.append(($log.val() ? "\n" : '') + array_text);
 					//Autoscroll
 					$log[0].scrollTop = $log[0].scrollHeight - $log[0].clientHeight;
+				} else {
+					//paint_bg();
+					array_text = text.split(" ");
+					$log = $('#log');
+					//Add text to log
+					$log.append(($log.val() ? "\n" : '') + array_text);
+					//Autoscroll
+					$log[0].scrollTop = $log[0].scrollHeight - $log[0].clientHeight;
+					if (document.getElementById('player1').value == array_text[0])
+						paint(array_text[1], array_text[2], "blue", "white");
 				}
             }
 
