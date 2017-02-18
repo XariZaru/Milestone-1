@@ -78,12 +78,15 @@
 						array_text.shift();
 						for (var x = 0; x < array_text.length; x++) {
 							var coord = array_text[x].split(",");
-							paint(parseInt(coord[0]), parseInt(coord[1]), "blue", "white");
+							paint(parseInt(coord[0]), parseInt(coord[1]), "red", "white");
 							$log.append(($log.val() ? "\n" : '') + "Moving player " + coord[0] + " " + coord[1]);
 						}
 					} else if (array_text[0] == "Food") {
-						var coord = array_text[x].split(",");
+						array_text.shift();
+						var coord = array_text.split(",");
+						$log.append(($log.val() ? "\n" : '') + "Food " + coord);
 						paint(parseInt(coord[0]), parseInt(coord[1]), "green", "white");
+						$log.append(($log.val() ? "\n" : '') + "Got food " + coord[0] + " " + coord[1]);
 					}
                 }
             }
