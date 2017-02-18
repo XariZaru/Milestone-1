@@ -30,7 +30,6 @@ var SnakeSocket = function (url) {
     };
 
     this.disconnect = function () {
-        this.conn.onclose = function () { };
         this.conn.close();
     };
 
