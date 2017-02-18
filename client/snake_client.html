@@ -60,25 +60,26 @@
                     //Autoscroll
                     $log[0].scrollTop = $log[0].scrollHeight - $log[0].clientHeight;
                 } else {
-					paint_bg();
                     array_text = text.split(" ");
                     $log = $('#log');
                     //Add text to log
                     //Autoscroll
                     $log[0].scrollTop = $log[0].scrollHeight - $log[0].clientHeight;
-                    if (document.getElementById('player1').value == array_text[0]) {
+					if (array_text[0] == "CLEAR")
+						paint_bg();
+                    else if (document.getElementById('player1').value == array_text[0]) {
 						array_text.shift();
 						for (var x = 0; x < array_text.length; x += 2) {
-							paint(parseInt(array_text[x]), parseInt(array_text[x + 1]), "blue", "white");
+							paint(parseInt(array_text[x])/10, parseInt(array_text[x + 1])/10, "blue", "white");
 							$log.append(($log.val() ? "\n" : '') + "Moving player " + array_text[x] + " " + array_text[x+1]);
 						}
                     } else if (array_text[0] != "Food") {
 						array_text.shift();
 						for (var x = 0; x < array_text.length; x += 2) {
-							paint(parseInt(array_text[x]), parseInt(array_text[x + 1]), "red", "white");
+							paint(parseInt(array_text[x])/10, parseInt(array_text[x + 1])/10, "red", "white");
 						}
 					} else if (array_text[0] == "Food") {
-						paint(parseInt(array_text[1]), parseInt(array_text[2]), "green", "white");
+						paint(parseInt(array_text[1])/10, parseInt(array_text[2])/10, "green", "white");
 					}
                 }
             }

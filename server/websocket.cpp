@@ -724,6 +724,7 @@ void webSocket::startServer(int port){
 				EntityAdministrator* admin = Server::getInstance()->getAdministrator();
 				Server::getInstance()->run();
 				for (PlayerEntity* player : admin->getPlayers()) {
+					wsSend(player->getId(), "CLEAR");
 					for (GameEntity* entity : admin->getEntities()) {
 						ostringstream os;
 						os << entity->getName().c_str();

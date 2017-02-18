@@ -52,7 +52,7 @@ void PlayerEntity::update()
 
 void PlayerEntity::respawn()
 {
-	dx = 1;
+	dx = 10;
 	dy = 0;
 	snake = std::deque<SnakePiece>();
 	for (int x = 0; x < length; x++) {
