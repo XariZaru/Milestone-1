@@ -11,82 +11,14 @@
         }
     </style>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script type="text/javascript" src="snake_socket.js"></script> 
-
-     <script type="text/javascript">
-            var Server;
-
-            function log(text) {
-				// Special character ! denotes regular messages from information
-				if (text.charAt(0) == "!") {
-					$log = $('#log');
-					//Add text to log
-					$log.append(($log.val() ? "\n" : '') + array_text);
-					//Autoscroll
-					$log[0].scrollTop = $log[0].scrollHeight - $log[0].clientHeight;
-				} else {
-					//paint_bg();
-					array_text = text.split(" ");
-					$log = $('#log');
-					//Add text to log
-					$log.append(($log.val() ? "\n" : '') + array_text);
-					//Autoscroll
-					$log[0].scrollTop = $log[0].scrollHeight - $log[0].clientHeight;
-					if (document.getElementById('player1').value == array_text[0])
-						paint(array_text[1], array_text[2], "blue", "white");
-				}
-            }
-
-            function send(text) {
-                Server.send('message', text);
-            }
-
-            function connect() {
-                log('Attempting to Connect...');
-                Server = new SnakeSocket('ws://' + document.getElementById('ip').value + ':' + document.getElementById('port').value);
-
-                $('#message').keypress(function (e) {
-                    if (e.keyCode == 13 && this.value) {
-                        log('You: ' + this.value);
-                        send(this.value);
-
-                        $(this).val('');
-                    }
-                });
-
-                //Let the user know we're connected
-                Server.bind('open', function () {
-                    var gameBoard = document.getElementById('game');
-                    document.getElementById("cntBtn").disabled = true;
-                    log("Connected.");
-                    gameBoard.style.display = "block";
-
-                    Server.send("player1", document.getElementById('player1').value +".Player1");
-                    //Server.send("player2", document.getElementById('player2').value+".Player2");
-                });
-
-                //OH NOES! Disconnection occurred.
-                Server.bind('close', function (data) {
-                    document.getElementById("cntBtn").disabled = false;
-                    log("Disconnected.");
-                    Server.send("disconnect", "User has disconnected");
-                });
-
-                //Log any messages sent from server
-                Server.bind('message', function (payload) {
-                    log(payload);
-                });
-
-                Server.connect();
-            }
-        </script>
 </head>
 
 <body style="font-family: Arial">
     <center>
-        <h1>ICS 167 - MULTIPLAYER SNAKE GAME</h1>
-        <h4>By: Wesley Tseng, Alexander Lee, Jonathan Nguyen, Patrick Jose</h4>
+        <center>
+            <h1>ICS 167 - MULTIPLAYER SNAKE GAME</h1>
+            <h4>By: Wesley Tseng, Alexander Lee, Jonathan Nguyen, Patrick Jose</h4>
+        </center>    
 
         <!-- Server IP and Port Input Fields -->
         Player Name: <input type='text' id="player1" name="player1">
@@ -108,7 +40,88 @@
             <canvas id="canvas" width="500" height="500"></canvas>
         </div>
 
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script type="text/javascript" src="snake_socket.js"></script> 
         <script type="text/javascript">
+
+            // ----------------
+            // SERVER FUNCTIONS
+            // ----------------
+            var Server;
+
+            function log(text) {
+                // Special character ! denotes regular messages from information
+                if (text.charAt(0) == "!") {
+                    $log = $('#log');
+                    //Add text to log
+                    $log.append(($log.val() ? "\n" : '') + array_text);
+                    //Autoscroll
+                    $log[0].scrollTop = $log[0].scrollHeight - $log[0].clientHeight;
+                } else {
+                    //paint_bg();
+                    array_text = text.split(" ");
+                    $log = $('#log');
+                    //Add text to log
+                    $log.append(($log.val() ? "\n" : '') + array_text);
+                    //Autoscroll
+                    $log[0].scrollTop = $log[0].scrollHeight - $log[0].clientHeight;
+
+                    if (document.getElementById('player1').value == array_text[0]) {
+                        paint(array_text[1], array_text[2], "blue", "white");
+                    }
+                        
+                }
+            }
+
+            function send(text) {
+                Server.send('message', text);
+            }
+
+            function connect() {
+                log('Connecting...');
+                Server = new SnakeSocket('ws://' + document.getElementById('ip').value + ':' + document.getElementById('port').value);
+
+                $('#message').keypress(function (e) {
+                    if (e.keyCode == 13 && this.value) {
+                        log('You: ' + this.value);
+                        send(this.value);
+
+                        $(this).val('');
+                    }
+                });
+
+                //Let the user know we're connected
+                Server.bind('open', function () {
+                    var gameBoard = document.getElementById('game');
+                    document.getElementById("cntBtn").disabled = true;
+                    log("Connected.");
+                    gameBoard.style.display = "block";
+
+                    Server.send("player1", document.getElementById('player1').value + ".Player1");
+                    //Server.send("player2", document.getElementById('player2').value+".Player2");
+                });
+
+                //OH NOES! Disconnection occurred.
+                Server.bind('close', function (data) {
+                    document.getElementById("cntBtn").disabled = false;
+                    log("Disconnected.");
+                    Server.send("disconnect", "User has disconnected");
+                });
+
+                //Log any messages sent from server
+                Server.bind('message', function (payload) {
+                    log(payload);
+                });
+
+                Server.connect();
+            }
+
+
+            // ---------------------
+            // PAINTING GAME OBJECTS
+            // ---------------------
+
             $(document).ready(function () {
                 var canvas = document.getElementById("canvas");
                 var map = canvas.getContext("2d");
@@ -141,7 +154,8 @@
                     // Creates snake array and food object
                     create_snake();
                     create_food();
-					paint_snakes();
+                    paint_snakes();
+
 					/*
                     if (typeof game_loop != "undefined")
                     { clearInterval(game_loop); }
@@ -149,7 +163,6 @@
                     // Updates game every 60 ms
                     game_loop = setInterval(paint_snakes, 60);
 					*/
-
                 }
 
                 init();
@@ -177,19 +190,19 @@
 
                 }
 
-                function paint_snakes() {
+                function paint_snakes(p1x, p1y, p2x, p2y) {
                     paint_bg();
-;
+
                     // PLAYER 1 SNAKE
                     var p1x = snake_1[0].x;
                     var p1y = snake_1[0].y;
 
-                    if (dir_1 == "right") p1x++;
-                    else if (dir_1 == "left") p1x--;
-                    else if (dir_1 == "up") p1y--;
-                    else if (dir_1 == "down") p1y++;
+                    // Draws snake based on direction
+                    if          (dir_1 == "right")   p1x++;
+                    else if     (dir_1 == "left")    p1x--;
+                    else if     (dir_1 == "up")      p1y--;
+                    else if     (dir_1 == "down")    p1y++;
 
-					
                     // Restarts game if Snake 1 touches wall, itself, or Snake 2
                     if (p1x == -1 || p1x == width / b_size || p1y == -1 || p1y == height / b_size || chk_collision(p1x, p1y, snake_1) || chk_collision(p1x, p1y, snake_2)) {
                         init();
