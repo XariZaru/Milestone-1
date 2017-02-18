@@ -16,9 +16,7 @@ PlayerEntity::PlayerEntity(std::string str, int clientID) : id(clientID), length
 		SnakePiece piece;
 		piece.x = position.first - x;
 		piece.y = position.second;
-		piece.head.dx = dx;
-		piece.tail.dx = dx;
-		snake.push_front(piece);
+		snake.push_back(piece);
 	}
 }
 
@@ -28,9 +26,7 @@ PlayerEntity::PlayerEntity(std::string str, std::pair<int, int> pos, int clientI
 		SnakePiece piece;
 		piece.x = position.first - x;
 		piece.y = position.second;
-		piece.head.dx = dx;
-		piece.tail.dx = dx;
-		snake.push_front(piece);
+		snake.push_back(piece);
 	}
 }
 
@@ -50,14 +46,14 @@ void PlayerEntity::update()
 
 	for (int x = 0; x < snake.size(); x++) {
 		SnakePiece& piece = snake.at(x);
-		piece.x += piece.head.dx;
-		piece.y += piece.head.dy;
+		piece.previous_coordinate = std::make_pair(piece.x, piece.y);
 		if (x != 0) {
-			SnakePiece& prev_piece = snake.at(x - 1);
-			prev_piece.tail.dx = prev_piece.head.dx;
-			prev_piece.tail.dy = prev_piece.head.dy;
-			piece.head.dx = prev_piece.tail.dx;
-			piece.head.dy = prev_piece.tail.dy;
+			piece.x = snake.at(x - 1).previous_coordinate.first;
+			piece.y = snake.at(x - 1).previous_coordinate.second;
+		}
+		else {
+			piece.x += dx;
+			piece.y += dy;
 		}
 	}
 }
@@ -71,8 +67,7 @@ void PlayerEntity::respawn()
 		SnakePiece piece;
 		piece.x = position.first - x;
 		piece.y = position.second;
-		piece.head.dx = 1;
-		snake.push_front(piece);
+		snake.push_back(piece);
 	}
 	score = 0;
 }
@@ -83,8 +78,6 @@ void PlayerEntity::setDx(int pdx)
 	if (dx == 0) {
 		dx = pdx;
 		dy = 0;
-		snake.at(0).head.dx = pdx;
-		snake.at(0).head.dy = 0;
 	}
 }
 
@@ -93,8 +86,6 @@ void PlayerEntity::setDy(int pdy)
 	if (dy == 0) {
 		dy = pdy;
 		dx = 0;
-		snake.at(0).head.dy = pdy;
-		snake.at(0).head.dx = 0;
 	}
 }
 
@@ -115,10 +106,8 @@ int PlayerEntity::size() {
 void PlayerEntity::grow() {
 	length++;
 	SnakePiece piece;
-	piece.x = snake.at(0).x - dx;
-	piece.y = snake.at(0).y - dy;
-	piece.head.dx = snake.at(0).tail.dx;
-	piece.head.dy = snake.at(0).tail.dy;
-	snake.push_front(piece);
+	piece.x = snake.at(snake.size() - 1).x - dx;
+	piece.y = snake.at(snake.size() - 1).y - dy;
+	snake.push_back(piece);
 	score++;
 }

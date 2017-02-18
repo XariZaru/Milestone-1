@@ -76,7 +76,8 @@ void Server::run()
 		if (entity->getType() == GameEntity::EntityType::PLAYER) {
 			PlayerEntity* player = (PlayerEntity*)entity;
 			FoodEntity* food = admin->getFood();
-			if (player->getPosition().first == food->getPosition().first && player->getPosition().second == food->getPosition().second) {
+			PlayerEntity::SnakePiece& piece = player->getPieces().at(0);
+			if (piece.x == food->getPosition().first && piece.y == food->getPosition().second) {											
 				food->respawn();
 				player->grow();
 			}
@@ -85,7 +86,7 @@ void Server::run()
 			restart();
 
 	}
-	//printState();
+	printState();
 }
 
 // Restarts the game and sets scores to players to respective areas.

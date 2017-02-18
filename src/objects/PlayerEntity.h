@@ -23,8 +23,7 @@ public:
 	struct SnakePiece {
 		int x;
 		int y;
-		Direction head;
-		Direction tail;
+		std::pair<int, int> previous_coordinate;
 
 	};
 
