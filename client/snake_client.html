@@ -65,37 +65,59 @@
                     //Add text to log
                     //Autoscroll
                     $log[0].scrollTop = $log[0].scrollHeight - $log[0].clientHeight;
+                    // If received packet is clear, draws canvas board for game
 					if (array_text[0] == "CLEAR"){ 
-						paint_bg();
+                        paint_bg();
+
+                    // If received packet is playerscore, draws score of players on canvas
 					} else if (array_text[0] == "PLAYERSCORE") {
 						array_text.shift();
 						var p1_score_text = ""+ array_text[0] +"'s Score: " + array_text[1];
 						map.fillStyle = "black";
 						if (array_text[0] == document.getElementById('player1').value) {
-							map.fillText(p1_score_text, 5, height - 5);
-						} else {
-							map.fillText(p1_score_text, width - 250, height - 5);
-						}
+							map.fillText(p1_score_text, 5, height - 5); // Player 1's Score
+                        }
+                        else {
+							map.fillText(p1_score_text, width - 75, height - 5); // Player 2's Score
+                        }
+
+                        // Temp placement for latency
+                        var latency_text = "Latency: 31 ms";
+                        map.fillStyle = "black";
+                        map.fillText(latency_text, 5, 10);
+
+                    // If received packet is player 1, parse coordinates and draw player 1's snake
                     } else if (document.getElementById('player1').value == array_text[0]) {
 						array_text.shift();
 						for (var x = 0; x < array_text.length; x++) {
 							var coord = array_text[x].split(",");
 							paint(parseInt(coord[0]), parseInt(coord[1]), "blue", "white");
 							//$log.append(($log.val() ? "\n" : '') + "Moving player " + coord[0] + " " + coord[1]);
-						}
+                        }
+
+                    // If received packet is not food (player2), parse coordinates and draw player 2's snake
                     } else if (array_text[0] != "Food") {
 						array_text.shift();
 						for (var x = 0; x < array_text.length; x++) {
 							var coord = array_text[x].split(",");
 							paint(parseInt(coord[0]), parseInt(coord[1]), "red", "white");
 							//$log.append(($log.val() ? "\n" : '') + "Moving player " + coord[0] + " " + coord[1]);
-						}
+                        }
+
+                    // If received packet is food, parse coordinates and paint food
 					} else if (array_text[0] == "Food") {
 						array_text.shift();
 						var coord = array_text[0].split(",");
 						paint(parseInt(coord[0]), parseInt(coord[1]), "green", "white");
 						//$log.append(($log.val() ? "\n" : '') + "Got food " + coord[0] + " " + coord[1]);
-					}
+                    }
+
+                    // If received packet is latency, calculates received timestamp from sent timestamp
+                    // to determine the amount of latency
+                    //else if (array_text[0] == "Latency") {
+                    //    var latency;
+                    //    var latency_text = "Latency: " + latency + " ms";
+                    //}
                 }
             }
 
@@ -142,27 +164,26 @@
                 Server.connect();
             }
 
-			function paint_snakes(p1x, p1y, p2x, p2y) {
-				paint_bg();
-                var dir_1;
-                var latency;
-				var p1_score = 0, p2_score = 0;
-				// Draws snake based on direction
-				if          (dir_1 == "right")   p1x++;
-				else if     (dir_1 == "left")    p1x--;
-				else if     (dir_1 == "up")      p1y--;
-				else if     (dir_1 == "down")    p1y++;
+//			function paint_snakes(p1x, p1y, p2x, p2y) {
+//				paint_bg();
+//                var dir_1;
+//                var latency;
+//				var p1_score = 0, p2_score = 0;
+//				// Draws snake based on direction
+//				if          (dir_1 == "right")   p1x++;
+//				else if     (dir_1 == "left")    p1x--;
+//				else if     (dir_1 == "up")      p1y--;
+//				else if     (dir_1 == "down")    p1y++;
 
-				// SCORE TEXT
-                var latency_text = "Latency: " + latency + " ms";
-				var p1_score_text = "Player 1 Score: " + p1_score;
-				var p2_score_text = "Player 2 Score: " + p2_score;
-                map.fillStyle = "black";
-                map.fillText(latency_text, 0, width / 2);
-				map.fillText(p1_score_text, 5, height - 5);
-				map.fillText(p2_score_text, width - 100, height - 5);
+//				// SCORE TEXT
+//                var latency_text = "Latency: " + latency + " ms";
+//				var p1_score_text = "Player 1 Score: " + p1_score;
+//				var p2_score_text = "Player 2 Score: " + p2_score;
+//                map.fillStyle = "black";
+//				map.fillText(p1_score_text, 5, height - 5);
+//				map.fillText(p2_score_text, width - 100, height - 5);
 
-			}
+//			}
 
 			// Paints Cube object given coordinates and color
 			function paint(x, y, f_c, s_c) {
@@ -203,7 +224,7 @@
 				var key = e.which;
 				var dir_1 = "";
 				// Player 1 uses WSAD
-				if (key == "65") dir_1 = "left";
+				if      (key == "65") dir_1 = "left";
 				else if (key == "87") dir_1 = "up";
 				else if (key == "68") dir_1 = "right";
 				else if (key == "83") dir_1 = "down";
