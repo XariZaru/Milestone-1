@@ -144,7 +144,8 @@
 
 			function paint_snakes(p1x, p1y, p2x, p2y) {
 				paint_bg();
-				var dir_1;
+                var dir_1;
+                var latency;
 				var p1_score = 0, p2_score = 0;
 				// Draws snake based on direction
 				if          (dir_1 == "right")   p1x++;
@@ -153,9 +154,11 @@
 				else if     (dir_1 == "down")    p1y++;
 
 				// SCORE TEXT
+                var latency_text = "Latency: " + latency + " ms";
 				var p1_score_text = "Player 1 Score: " + p1_score;
 				var p2_score_text = "Player 2 Score: " + p2_score;
-				map.fillStyle = "black";
+                map.fillStyle = "black";
+                map.fillText(latency_text, 0, width / 2);
 				map.fillText(p1_score_text, 5, height - 5);
 				map.fillText(p2_score_text, width - 100, height - 5);
 
