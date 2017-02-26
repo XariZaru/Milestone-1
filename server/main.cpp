@@ -52,7 +52,7 @@ void messageHandler(int clientID, string message){
 	ostringstream os;
 	os << "Stranger " << clientID << " says: " << message;
 
-	// Set player names
+	// If message contains a player keyword, sets the name of player to inputted name
 	std::size_t found = message.find(".Player1");
 	if(found != std::string::npos){
 		player1name = message.substr(0, found);
@@ -62,6 +62,7 @@ void messageHandler(int clientID, string message){
 		Server::getInstance()->unpause();
 	} 
 
+	// If the message contains a key keyword, move in specific direction
 	found = message.find(".KEY");
 	if (found != std::string::npos) {
 		std::string command = message.substr(0, found);
@@ -83,6 +84,12 @@ void messageHandler(int clientID, string message){
 			else
 				Server::getInstance()->pause();
 	}
+
+	// If the message contains a timestamp keyword, returns timestamp after latency
+	found = message.find(".TIMESTAMP");
+	if (found != std::string::npos) {
+
+	};
 
 	/*
 	// Update scores

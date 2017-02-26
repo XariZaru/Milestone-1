@@ -22,34 +22,34 @@
 
         <!-- Server IP and Port Input Fields -->
         Player Name: <input type='text' id="player1" name="player1">
-        <br/><br />
+        <br/><br/>
         
         Server IP: <input type='text' id='ip' name='ip'>
         Server Port: <input type='text' id='port' name='port'>
-        <br/><br />
+        <br/><br/>
 
         <!-- Creates "Connect" button -->
         <button type="button" id="cntBtn" onclick="connect();">Connect</button>
         <h5></h5>
 
-        <!-- Console-->
+        <!-- Console -->
         <textarea style="background-color:black; color:green;" id='log' name='log' readonly='readonly'></textarea><br/>
 
-        <!-- Creates game canvas and Javascript text -->
+        <!-- Creates game canvas -->
         <div id="game" style="display:none">
             <canvas id="canvas" width="500" height="500"></canvas>
         </div>
 
-
+        <!-- Javascript Text for Game -->
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
         <script type="text/javascript" src="snake_socket.js"></script> 
         <script type="text/javascript">
 
-            // ----------------
-            // SERVER FUNCTIONS
-            // ----------------
+            //--------------------//
+            //- SERVER FUNCTIONS -//
+            //--------------------//
             var Server;
-			var map, height, width, canvas, b_size;
+			var map, height, width, canvas, b_size, tStamp, latEstimate;
 			
             function log(text) {
                 // Special character ! denotes regular messages from information
@@ -65,6 +65,7 @@
                     //Add text to log
                     //Autoscroll
                     $log[0].scrollTop = $log[0].scrollHeight - $log[0].clientHeight;
+
                     // If received packet is clear, draws canvas board for game
 					if (array_text[0] == "CLEAR"){ 
                         paint_bg();
@@ -81,8 +82,8 @@
 							map.fillText(p1_score_text, width - 75, height - 5); // Player 2's Score
                         }
 
-                        // Temp placement for latency
-                        var latency_text = "Latency: 31 ms";
+                        // Temp placement for displaying latency
+                        var latency_text = "Latency: " + latEstimate + " ms";
                         map.fillStyle = "black";
                         map.fillText(latency_text, 5, 10);
 
@@ -116,7 +117,7 @@
                     // to determine the amount of latency
                     //else if (array_text[0] == "Latency") {
                     //    var latency;
-                    //    var latency_text = "Latency: " + latency + " ms";
+                    //    var latency_text = "Latency: " + latEstimate + " ms";
                     //}
                 }
             }
@@ -186,7 +187,8 @@
 //			}
 
 			// Paints Cube object given coordinates and color
-			function paint(x, y, f_c, s_c) {
+            // Paints square object given coordinates and fill/stroke color
+            function paint(x, y, f_c, s_c) {
 				map.fillStyle = f_c;
 				map.fillRect(x * b_size, y * b_size, b_size, b_size);
 				map.strokeStyle = s_c;
@@ -220,26 +222,31 @@
 			// Keyboard controls for each player
 			$(document).keydown(function (e) {
 				if (Server == null)
-					return;
+                    return;
+
 				var key = e.which;
-				var dir_1 = "";
-				// Player 1 uses WSAD
+                var dir_1 = "";
+
+				// Player uses WASD
 				if      (key == "65") dir_1 = "left";
 				else if (key == "87") dir_1 = "up";
 				else if (key == "68") dir_1 = "right";
 				else if (key == "83") dir_1 = "down";
-				else if (key == "80") dir_1 = "p";
+                else if (key == "80") dir_1 = "p";
+
+                // Sends which direction player presses to server
 				if (dir_1 != "")
 					Server.send(document.getElementById('player1').value, dir_1 + ".KEY");
 			})
 
 		$(document).ready(function () {
 			$log = $('#log');
-			canvas = document.getElementById("canvas");
-			map = canvas.getContext("2d");
-			width = document.getElementById('canvas').width;
-			height = document.getElementById('canvas').height;
-			b_size = 10;
+			canvas   = document.getElementById("canvas");
+			map      = canvas.getContext("2d");
+			width    = document.getElementById('canvas').width;
+			height   = document.getElementById('canvas').height;
+			b_size   = 10;
+            tStamp   = Date.now();
 			paint_bg();
             })
         </script>
