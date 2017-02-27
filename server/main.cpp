@@ -8,6 +8,14 @@
 #include "websocket.h"
 #include "..\src\server\Server.h"
 #include <Windows.h>
+#include <thread>
+#include <chrono>
+#include <ctime>
+#include <random>
+#include <math.h>
+#include <queue>
+#include <algorithm>
+
 
 using namespace std;
 
@@ -17,6 +25,8 @@ int player1score = 0;
 int player2score = 0;
 string player1name = "";
 string player2name = "";
+// Sets random seed
+mt19937 randomGenerator(time(0));
 
 /* called when a client connects */
 void openHandler(int clientID){
@@ -48,9 +58,13 @@ void closeHandler(int clientID){
 
 /* called when a client sends a message to the server */
 void messageHandler(int clientID, string message){
-//	cout << message << endl;
+	cout << "Message received: " << message << endl;
 	ostringstream os;
 	os << "Stranger " << clientID << " says: " << message;
+	std::uniform_int_distribution<int> delay(0, 1000);
+	cout << "Time: " << time(0) << endl;
+	this_thread::sleep_for(chrono::milliseconds(delay(randomGenerator)));
+	cout << "Time: " << time(0) << endl;
 
 	// If message contains a player keyword, sets the name of player to inputted name
 	std::size_t found = message.find(".Player1");
@@ -136,6 +150,7 @@ void periodicHandler(){
 
 int main(int argc, char *argv[]){
 	int port;
+
 
 	Server* gameServer = Server::getInstance();
 	//gameServer->run();
