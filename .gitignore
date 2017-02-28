@@ -132,3 +132,44 @@ src/Milestone 1/Milestone 1/stdafx.cpp
 src/Milestone 1/Milestone 1/stdafx.h
 src/Milestone 1/Milestone 1/targetver.h
 src/Milestone 1/ipch/MILESTONE 1-c794607b/MILESTONE 1-a17150ed.ipch
+Project1/.vs/Project1/v14/.suo
+Project1/Debug/Project1.exe
+Project1/Debug/Project1.ilk
+Project1/Debug/Project1.pdb
+Project1/Project1.VC.opendb
+Project1/Project1.sdf
+Project1/Project1.sln
+Project1/Project1/Debug/EntityAdministrator.obj
+Project1/Project1/Debug/FoodEntity.obj
+Project1/Project1/Debug/GameEntity.obj
+Project1/Project1/Debug/PlayerEntity.obj
+Project1/Project1/Debug/Project1.log
+Project1/Project1/Debug/Project1.tlog/CL.command.1.tlog
+Project1/Project1/Debug/Project1.tlog/CL.read.1.tlog
+Project1/Project1/Debug/Project1.tlog/CL.write.1.tlog
+Project1/Project1/Debug/Project1.tlog/Project1.lastbuildstate
+Project1/Project1/Debug/Project1.tlog/link.command.1.tlog
+Project1/Project1/Debug/Project1.tlog/link.read.1.tlog
+Project1/Project1/Debug/Project1.tlog/link.write.1.tlog
+Project1/Project1/Debug/Server.obj
+Project1/Project1/Debug/Server_test.obj
+Project1/Project1/Debug/base64.obj
+Project1/Project1/Debug/gameLogic.obj
+Project1/Project1/Debug/main.obj
+Project1/Project1/Debug/sha1.obj
+Project1/Project1/Debug/vc140.idb
+Project1/Project1/Debug/vc140.pdb
+Project1/Project1/Debug/websocket.obj
+Project1/Project1/Project1.vcxproj
+Project1/Project1/Project1.vcxproj.filters
+src/ConsoleApplication1/.vs/ConsoleApplication1/v14/.suo
+src/ConsoleApplication1/ConsoleApplication1.sdf
+src/ConsoleApplication1/ConsoleApplication1.sln
+src/ConsoleApplication1/ConsoleApplication1/ConsoleApplication1.cpp
+src/ConsoleApplication1/ConsoleApplication1/ConsoleApplication1.vcxproj
+src/ConsoleApplication1/ConsoleApplication1/ConsoleApplication1.vcxproj.filters
+src/ConsoleApplication1/ConsoleApplication1/ReadMe.txt
+src/ConsoleApplication1/ConsoleApplication1/stdafx.cpp
+src/ConsoleApplication1/ConsoleApplication1/stdafx.h
+src/ConsoleApplication1/ConsoleApplication1/targetver.h
+src/ConsoleApplication1/ipch/CONSOLEAPPLICATION1-2b9f6960/CONSOLEAPPLICATION1-822ffee4.ipch
