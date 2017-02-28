@@ -77,6 +77,8 @@ void Server::run()
 		if (entity->getType() == GameEntity::EntityType::PLAYER) {
 			PlayerEntity* player = (PlayerEntity*)entity;
 			FoodEntity* food = admin->getFood();
+
+			// Eat food if on it
 			if (player->getPosition().first == food->getPosition().first && player->getPosition().second == food->getPosition().second) {		
 				admin->getFood()->respawn();
 				player->grow();

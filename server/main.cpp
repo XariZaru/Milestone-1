@@ -61,10 +61,13 @@ void messageHandler(int clientID, string message){
 	cout << "Message received: " << message << endl;
 	ostringstream os;
 	os << "Stranger " << clientID << " says: " << message;
+
+	/*
 	std::uniform_int_distribution<int> delay(0, 1000);
 	cout << "Time: " << time(0) << endl;
 	this_thread::sleep_for(chrono::milliseconds(delay(randomGenerator)));
 	cout << "Time: " << time(0) << endl;
+	*/
 
 	// If message contains a player keyword, sets the name of player to inputted name
 	std::size_t found = message.find(".Player1");
@@ -83,27 +86,32 @@ void messageHandler(int clientID, string message){
 		PlayerEntity* player = Server::getInstance()->getAdministrator()->getPlayer(clientID);
 		if (player == nullptr)
 			return;
-		SYSTEMTIME st;
+		SYSTEMTIME st, delay;
 		GetSystemTime(&st);
 		long time_start = st.wMilliseconds;
 		bool paused = Server::getInstance()->isPaused();
-		if (command == "left" && !paused)
-			player->setDx(-1);
-		else if (command == "right" && !paused)
-			player->setDx(1);
-		else if (command == "up" && !paused)
-			player->setDy(-1);
-		else if (command == "down" && !paused)
-			player->setDy(1);
-		else if (command == "p")
+
+		if (!paused) {
+			SYSTEMTIME time;
+			GetSystemTime(&time);
+			std::uniform_int_distribution<int> delay(0, 3000);
+			std::cout << "DELAY IS " << delay(randomGenerator) / 1000;
+			GameEntity::Command command_event = GameEntity::Command{ command, time.wSecond, delay(randomGenerator) };
+			if (player->getCommand())
+				player->addCommand(command_event);
+			else
+				player->setCommand(&command_event);
+		} else if (command == "p") {
 			if (Server::getInstance()->isPaused())
 				Server::getInstance()->unpause();
 			else
 				Server::getInstance()->pause();
+		}
 		GetSystemTime(&st);
 		long time_elapsed = st.wMilliseconds - time_start;
 		ostringstream oss;
 		oss << "ACK " << time_elapsed;
+		std::cout << "TIME ELAPSED " << time_elapsed << std::endl;
 		server.wsSend(clientID, oss.str());
 	}
 

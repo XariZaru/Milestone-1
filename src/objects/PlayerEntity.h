@@ -9,8 +9,6 @@
 #define PLAYERENTITY_H_
 
 #include "GameEntity.h"
-
-#include <deque>
 #include <map>
 
 class PlayerEntity: public GameEntity {
@@ -29,15 +27,23 @@ public:
 
 	PlayerEntity(std::string name, int clientID);
 	PlayerEntity(std::string name, std::pair<int, int> position, int clientID);
+	Command* getCommand() {
+		return current_command;
+	}
+
 	virtual ~PlayerEntity();
 	virtual int getId();
 	virtual void update();
 	virtual void respawn();
 	void setDx(int dx);
+	void setCommand(Command* command) {
+		current_command = command;
+	}
 	void setDy(int dy);
 	void setScore(int value) {
 		score = value;
 	}
+
 	int getScore() {
 		return score;
 	}
@@ -51,12 +57,14 @@ public:
 	std::string getName();
 
 	int size();
+	SYSTEMTIME initial;
 
 	void grow();
 
 private:
 	int length, id, dx = 1, dy = 0;
 	int score = 0;
+	Command* current_command;
 	std::deque<SnakePiece> snake;
 	std::string name;
 };

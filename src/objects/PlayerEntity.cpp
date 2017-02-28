@@ -41,6 +41,44 @@ int PlayerEntity::getId()
 
 void PlayerEntity::update()
 {
+	// Check queue and if delay has passed then execute dx or dy changes
+	SYSTEMTIME elapsed;
+	GetSystemTime(&elapsed);
+	if (current_command)
+		std::cout << "TIME ELAPSED " << elapsed.wSecond << " vs. TIME DELAY " << current_command->delay << " and size of queue is " << command_queue.size() << std::endl;
+
+	if (!current_command || elapsed.wSecond - current_command->initial >= current_command->delay) 
+	{
+		if (current_command) 
+		{
+			/*
+			std::string command = current_command->command;
+			if (command == "left") {
+				setDx(-1);
+			}
+			else if (command == "right") {
+				setDx(1);
+			}
+			else if (command == "up") {
+				setDy(-1);
+			}
+			else if (command == "down") {
+				setDy(1);
+			}
+			current_command = nullptr;
+			*/
+		}
+
+		if (command_queue.size() > 0) {
+			
+			/*
+			current_command = &command_queue.at(0);
+			command_queue.pop_front();
+			*/
+		}
+
+	}
+
 	changeX(dx);
 	changeY(dy);
 

@@ -9,11 +9,20 @@
 #define GAMEENTITY_H_
 
 #include <iostream>
+#include <deque>
+#include <Windows.h>
 
 class GameEntity {
 public:
 
+	struct Command {
+		std::string command;
+		int initial;
+		int delay;
+	};
+
 	enum EntityType {PLAYER, FOOD, GENERAL};
+	enum CommandType {LEFT, RIGHT, UP, DOWN};
 	virtual EntityType  getType() = 0;
 	virtual std::string getName();
 	virtual std::pair<int, int> getPosition();
@@ -24,11 +33,20 @@ public:
 	virtual void update();
 	virtual void respawn();
 
+	void addCommand(Command command) {
+		command_queue.push_back(command);
+	}
+
+	std::deque<Command>& getCommands() {
+		return command_queue;
+	}
+
 private:
 	std::string name;
 
 protected:
 	std::pair<int, int> position;
+	std::deque<Command> command_queue;
 };
 
 #endif /* GAMEENTITY_H_ */
