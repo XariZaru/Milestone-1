@@ -97,6 +97,8 @@ Jonathan Nguyen - 93726859/src/server/Server.h
 Jonathan Nguyen - 93726859/src/server/Server_test.cpp
 src/Milestone-1/enc_temp_folder/6f8569e9983c70883d26653e5b3d1d99/main.cpp
 src/Milestone-1/enc_temp_folder/85516bf8ec6adc85373881d9ee187ff9/websocket.cpp
+<<<<<<< .merge_file_a16164
+=======
 Jonathan Nguyen - 93726859 (Final).rar
 Jonathan Nguyen - 93726859/src/Milestone-1/Milestone-1/Debug/FoodEntity.obj
 Jonathan Nguyen - 93726859/src/objects/FoodEntity.cpp
@@ -173,3 +175,4 @@ src/ConsoleApplication1/ConsoleApplication1/stdafx.cpp
 src/ConsoleApplication1/ConsoleApplication1/stdafx.h
 src/ConsoleApplication1/ConsoleApplication1/targetver.h
 src/ConsoleApplication1/ipch/CONSOLEAPPLICATION1-2b9f6960/CONSOLEAPPLICATION1-822ffee4.ipch
+>>>>>>> .merge_file_a22372

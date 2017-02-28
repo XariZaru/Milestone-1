@@ -727,7 +727,11 @@ void webSocket::startServer(int port){
 					wsSend(player->getId(), "CLEAR");
 					for (GameEntity* entity : admin->getEntities()) {
 						ostringstream os;
+<<<<<<< .merge_file_a20192
+						os << entity->getName().c_str();
+=======
 						os << entity->getName().c_str(); // Appends the packet header
+>>>>>>> .merge_file_a21140
 						if (entity->getType() != GameEntity::EntityType::PLAYER) {
 							os << " " << entity->getPosition().first << "," << entity->getPosition().second;
 						} else {
@@ -739,7 +743,10 @@ void webSocket::startServer(int port){
 
 						wsSend(player->getId(), os.str());
 
+<<<<<<< .merge_file_a20192
+=======
 						// Sends player score
+>>>>>>> .merge_file_a21140
 						std::vector<PlayerEntity*> players = admin->getPlayers();
 						for (PlayerEntity* p : players) {
 							ostringstream os;
