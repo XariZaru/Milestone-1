@@ -51,7 +51,7 @@ void PlayerEntity::update()
 	{
 		if (current_command) 
 		{
-			/*
+			
 			std::string command = current_command->command;
 			if (command == "left") {
 				setDx(-1);
@@ -66,15 +66,14 @@ void PlayerEntity::update()
 				setDy(1);
 			}
 			current_command = nullptr;
-			*/
+			
 		}
 
 		if (command_queue.size() > 0) {
 			
-			/*
-			current_command = &command_queue.at(0);
+			current_command = command_queue.at(0);
 			command_queue.pop_front();
-			*/
+			
 		}
 
 	}

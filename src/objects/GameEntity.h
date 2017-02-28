@@ -17,8 +17,8 @@ public:
 
 	struct Command {
 		std::string command;
-		int initial = 0;
-		int delay = 0;
+		unsigned int initial = 0;
+		unsigned int delay = 0;
 	};
 
 	enum EntityType {PLAYER, FOOD, GENERAL};

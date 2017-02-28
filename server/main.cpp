@@ -90,20 +90,22 @@ void messageHandler(int clientID, string message){
 		GetSystemTime(&st);
 		long time_start = st.wMilliseconds;
 		bool paused = Server::getInstance()->isPaused();
-
+		unsigned long long millis = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
+		std::cout << millis << std::endl;
 		if (!paused) {
 			SYSTEMTIME time;
 			GetSystemTime(&time);
 			std::uniform_int_distribution<int> delay(0, 2);
 			GameEntity::Command command_event;
 			command_event.command = command;
-			command_event.initial = time.wSecond;
+			command_event.initial = millis;
 			command_event.delay = delay(randomGenerator);
 
 			if (player->getCommand())
 				player->addCommand(&command_event);
 			else
 				player->setCommand(&command_event);
+
 		} else if (command == "p") {
 			if (Server::getInstance()->isPaused())
 				Server::getInstance()->unpause();
