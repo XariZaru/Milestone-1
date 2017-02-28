@@ -17,8 +17,8 @@ public:
 
 	struct Command {
 		std::string command;
-		int initial;
-		int delay;
+		int initial = 0;
+		int delay = 0;
 	};
 
 	enum EntityType {PLAYER, FOOD, GENERAL};
@@ -33,11 +33,11 @@ public:
 	virtual void update();
 	virtual void respawn();
 
-	void addCommand(Command command) {
+	void addCommand(Command* command) {
 		command_queue.push_back(command);
 	}
 
-	std::deque<Command>& getCommands() {
+	std::deque<Command*>& getCommands() {
 		return command_queue;
 	}
 
@@ -46,7 +46,7 @@ private:
 
 protected:
 	std::pair<int, int> position;
-	std::deque<Command> command_queue;
+	std::deque<Command*> command_queue;
 };
 
 #endif /* GAMEENTITY_H_ */

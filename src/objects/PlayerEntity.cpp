@@ -45,7 +45,7 @@ void PlayerEntity::update()
 	SYSTEMTIME elapsed;
 	GetSystemTime(&elapsed);
 	if (current_command)
-		std::cout << "TIME ELAPSED " << elapsed.wSecond << " vs. TIME DELAY " << current_command->delay << " and size of queue is " << command_queue.size() << std::endl;
+		std::cout << "TIME: " << elapsed.wSecond << " TIME DELAY: " << current_command->delay << " TIME INITIAL: " << current_command->initial << "and size of queue is " << command_queue.size() << std::endl;
 
 	if (!current_command || elapsed.wSecond - current_command->initial >= current_command->delay) 
 	{

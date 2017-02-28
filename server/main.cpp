@@ -94,11 +94,14 @@ void messageHandler(int clientID, string message){
 		if (!paused) {
 			SYSTEMTIME time;
 			GetSystemTime(&time);
-			std::uniform_int_distribution<int> delay(0, 3000);
-			std::cout << "DELAY IS " << delay(randomGenerator) / 1000;
-			GameEntity::Command command_event = GameEntity::Command{ command, time.wSecond, delay(randomGenerator) };
+			std::uniform_int_distribution<int> delay(0, 2);
+			GameEntity::Command command_event;
+			command_event.command = command;
+			command_event.initial = time.wSecond;
+			command_event.delay = delay(randomGenerator);
+
 			if (player->getCommand())
-				player->addCommand(command_event);
+				player->addCommand(&command_event);
 			else
 				player->setCommand(&command_event);
 		} else if (command == "p") {
