@@ -83,12 +83,9 @@ void messageHandler(int clientID, string message){
 		PlayerEntity* player = Server::getInstance()->getAdministrator()->getPlayer(clientID);
 		if (player == nullptr)
 			return;
-<<<<<<< .merge_file_a22440
-=======
 		SYSTEMTIME st;
 		GetSystemTime(&st);
 		long time_start = st.wMilliseconds;
->>>>>>> .merge_file_a07476
 		bool paused = Server::getInstance()->isPaused();
 		if (command == "left" && !paused)
 			player->setDx(-1);
@@ -103,14 +100,11 @@ void messageHandler(int clientID, string message){
 				Server::getInstance()->unpause();
 			else
 				Server::getInstance()->pause();
-<<<<<<< .merge_file_a22440
-=======
 		GetSystemTime(&st);
 		long time_elapsed = st.wMilliseconds - time_start;
 		ostringstream oss;
 		oss << "ACK " << time_elapsed;
 		server.wsSend(clientID, oss.str());
->>>>>>> .merge_file_a07476
 	}
 
 	// If the message contains a timestamp keyword, returns timestamp after latency
