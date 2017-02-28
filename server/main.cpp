@@ -115,7 +115,6 @@ void messageHandler(int clientID, string message){
 		long time_elapsed = st.wMilliseconds - time_start;
 		ostringstream oss;
 		oss << "ACK " << time_elapsed;
-		std::cout << "TIME ELAPSED " << time_elapsed << std::endl;
 		server.wsSend(clientID, oss.str());
 	}
 

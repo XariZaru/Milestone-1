@@ -45,11 +45,9 @@ void PlayerEntity::update()
 	SYSTEMTIME elapsed;
 	GetSystemTime(&elapsed);
 
-	if (current_command)
-		std::cout << "TIME: " << elapsed.wSecond << " TIME DELAY: " << current_command->delay << " TIME INITIAL: " << current_command->initial << "and size of queue is " << command_queue.size() << std::endl;
-
 	if (!current_command || elapsed.wSecond - current_command->initial >= current_command->delay)
 	{
+
 		if (current_command)
 		{
 			std::string command = current_command->command;
@@ -66,11 +64,11 @@ void PlayerEntity::update()
 			else if (command == "down") {
 				setDy(1);
 			}
+			delete current_command;
 			current_command = nullptr;
-			if (command_queue.size() > 0) {
-				command_queue.pop_front();
-				current_command = command_queue.at(0);
-			}
+		} else if (command_queue.size() > 0) {
+			current_command = command_queue.at(0);
+			command_queue.pop_front();
 		}
 	}
 
