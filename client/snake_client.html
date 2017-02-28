@@ -150,7 +150,7 @@
       Server.bind('open', function () {
         var gameBoard = document.getElementById('game');
         document.getElementById("cntBtn").disabled = true;
-        log("Connected.");
+        console.log("Connected.");
         gameBoard.style.display = "block";
 
         Server.send("player1", document.getElementById('player1').value + ".Player1");
@@ -160,18 +160,18 @@
       //OH NOES! Disconnection occurred.
       Server.bind('close', function (data) {
         document.getElementById("cntBtn").disabled = false;
-        log("Disconnected.");
+        console.log("Disconnected.");
         Server.send("disconnect", "User has disconnected");
       });
 
       //Log any messages sent from server
       Server.bind('message', function (payload) {
-        log(payload);
+        console.log(payload);
       });
 
       Server.connect();
       //Test to see date.now()
-      console.log(Date.now());
+      //console.log(Date.now());
     }
 
     //			function paint_snakes(p1x, p1y, p2x, p2y) {
