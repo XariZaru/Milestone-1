@@ -67,13 +67,11 @@ void PlayerEntity::update()
 				setDy(1);
 			}
 			current_command = nullptr;
+			if (command_queue.size() > 0) {
+				command_queue.pop_front();
+				current_command = command_queue.at(0);
+			}
 		}
-
-		if (command_queue.size() > 0) {
-			command_queue.pop_front();
-			current_command = command_queue.at(0);
-		}
-
 	}
 
 	changeX(dx);
