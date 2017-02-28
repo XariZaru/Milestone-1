@@ -47,11 +47,11 @@ void PlayerEntity::update()
 	for (int x = 0; x < snake.size(); x++) {
 		SnakePiece& piece = snake.at(x);
 		piece.previous_coordinate = std::make_pair(piece.x, piece.y);
-		if (x != 0) {
+		if (x != 0) { // Not first piece
 			piece.x = snake.at(x - 1).previous_coordinate.first;
 			piece.y = snake.at(x - 1).previous_coordinate.second;
 		}
-		else {
+		else { // First piece
 			piece.x = position.first;
 			piece.y = position.second;
 		}

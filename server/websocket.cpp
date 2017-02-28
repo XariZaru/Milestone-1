@@ -727,7 +727,7 @@ void webSocket::startServer(int port){
 					wsSend(player->getId(), "CLEAR");
 					for (GameEntity* entity : admin->getEntities()) {
 						ostringstream os;
-						os << entity->getName().c_str();
+						os << entity->getName().c_str(); // Appends the packet header
 						if (entity->getType() != GameEntity::EntityType::PLAYER) {
 							os << " " << entity->getPosition().first << "," << entity->getPosition().second;
 						} else {
@@ -739,6 +739,7 @@ void webSocket::startServer(int port){
 
 						wsSend(player->getId(), os.str());
 
+						// Sends player score
 						std::vector<PlayerEntity*> players = admin->getPlayers();
 						for (PlayerEntity* p : players) {
 							ostringstream os;

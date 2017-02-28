@@ -83,6 +83,9 @@ void messageHandler(int clientID, string message){
 		PlayerEntity* player = Server::getInstance()->getAdministrator()->getPlayer(clientID);
 		if (player == nullptr)
 			return;
+		SYSTEMTIME st;
+		GetSystemTime(&st);
+		long time_start = st.wMilliseconds;
 		bool paused = Server::getInstance()->isPaused();
 		if (command == "left" && !paused)
 			player->setDx(-1);
@@ -97,6 +100,11 @@ void messageHandler(int clientID, string message){
 				Server::getInstance()->unpause();
 			else
 				Server::getInstance()->pause();
+		GetSystemTime(&st);
+		long time_elapsed = st.wMilliseconds - time_start;
+		ostringstream oss;
+		oss << "ACK " << time_elapsed;
+		server.wsSend(clientID, oss.str());
 	}
 
 	// If the message contains a timestamp keyword, returns timestamp after latency
