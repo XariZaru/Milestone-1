@@ -259,7 +259,7 @@
             // Sends which direction player presses to server
             if (dir_1 != "") {
                 getServerTime();
-                Server.send(document.getElementById('player1').value, dir_1 + ".KEY");
+                Server.send(document.getElementById('player1').value, dir_1 + " " + tStamp.getTime() + ".KEY");
             }
 
 
