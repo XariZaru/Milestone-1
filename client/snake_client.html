@@ -233,12 +233,12 @@
             
         }
 
-        // Calculates the Client Server Time Including Offset
+        // Calculates the Client Server Time (tStamp) Including Offset
         function getServerTime() {
             var date = new Date();
 
             date.setTime(date.getTime + offset);
-            return date;
+            tStamp = date;
         }
 
         // Keyboard controls for each player
@@ -257,8 +257,12 @@
             else if (key == "80") dir_1 = "p";
 
             // Sends which direction player presses to server
-            if (dir_1 != "")
-                Server.send(document.getElementById('player1').value, dir_1 + " " + getServerTime() + ".KEY");      
+            if (dir_1 != "") {
+                getServerTime();
+                Server.send(document.getElementById('player1').value, dir_1 + " " + tStamp + ".KEY");
+            }
+                
+      
         })
 
         $(document).ready(function () {
