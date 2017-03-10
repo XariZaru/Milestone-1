@@ -80,11 +80,11 @@
                         map.fillText(p1_score_text, width - 150, height - 5); // Player 2's Score
                     }
 
-                    // Temp placement for displaying latency                    
+                    // Temp placement for displaying latency
                     var latency_text = "Latency: " + latEstimate + " ms";
                     map.fillStyle = "black";
                     map.fillText(latency_text, 5, 10);
-                    
+
 
                     // If received packet is player 1, parse coordinates and draw player 1's snake
                 } else if (document.getElementById('player1').value == array_text[0]) {
@@ -225,19 +225,19 @@
             Server.send("player2score", p2_score+".P2Score");
         }
 
-        
+
         function calculateOffset() {
             // Take time from server here
 
 
-            
+
         }
 
         // Calculates the Client Server Time (tStamp) Including Offset
         function getServerTime() {
             var date = new Date();
 
-            date.setTime(date.getTime + offset);
+            date.setTime(date.getTime() + offset);
             tStamp = date;
         }
 
@@ -259,10 +259,10 @@
             // Sends which direction player presses to server
             if (dir_1 != "") {
                 getServerTime();
-                Server.send(document.getElementById('player1').value, dir_1 + " " + tStamp + ".KEY");
+                Server.send(document.getElementById('player1').value, dir_1 + " " + tStamp.getTime() + ".KEY");
             }
-                
-      
+
+
         })
 
         $(document).ready(function () {
