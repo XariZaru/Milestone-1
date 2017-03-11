@@ -20,6 +20,7 @@ public:
 
 	struct Command {
 		std::string command;
+		GameEntity* player;
 		unsigned long long initial = 0;
 		unsigned long long to_arrive = 0;
 		unsigned int delay = 0;

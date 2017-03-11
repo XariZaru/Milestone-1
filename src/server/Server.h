@@ -55,6 +55,8 @@ private:
 	EntityAdministrator* admin;
 	boolean paused = true;
 	std::set<PacketListener*> packetListeners;
+	unsigned long long pd;
+	std::vector<GameEntity::Command*> bucket;
 	std::priority_queue<GameEntity::Command*, std::vector<GameEntity::Command*>, GameEntity::CommandComparator> commands;
 };
 

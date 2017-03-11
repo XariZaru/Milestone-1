@@ -42,8 +42,10 @@ Server::~Server() {
 }
 
 Server* Server::getInstance() {
-	if (!Server::instance)
+	if (!Server::instance) {
 		Server::instance = new Server();
+		Server::instance->pd = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
+	}
 	return Server::instance;
 }
 
@@ -73,15 +75,35 @@ void Server::run()
 {
 	paused = false;
 
-	SYSTEMTIME st;
-	GetSystemTime(&st);
+	unsigned long long time = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
 
-	while (!commands.empty() && commands.top()->to_arrive < std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1)) {
-		std::cout << "This command has passed " << commands.top()->command << " " << commands.top()->to_arrive << std::endl;
-		commands.pop();
+	if (time - pd >= 100) {
+		pd = time;
+		while (!commands.empty() && commands.top()->to_arrive < std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1)) {
+			bucket.insert(bucket.begin(), commands.top());
+			commands.pop();
+		}
+	}
+
+	if (bucket.size() > 0) {
+		GameEntity::Command* command = bucket.at(0);
+		std::string input = command->command;
+		PlayerEntity* player = (PlayerEntity*) command->player;
+		if (input == "left") {
+			player->setDx(-1);
+		} else if (input == "right") {
+			player->setDx(1);
+		} else if (input == "up") {
+			player->setDy(-1);
+		} else if (input == "down") {
+			player->setDy(1);
+		}
+		bucket.erase(bucket.begin());
+		delete command;
 	}
 
 	for (GameEntity* entity : admin->getEntities()) {
+
 		entity->update();
 		if (entity->getType() == GameEntity::EntityType::PLAYER) {
 			PlayerEntity* player = (PlayerEntity*)entity;
