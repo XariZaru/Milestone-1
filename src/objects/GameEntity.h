@@ -20,8 +20,14 @@ public:
 
 	struct Command {
 		std::string command;
-		unsigned int initial = 0;
+		unsigned long long initial = 0;
 		unsigned int delay = 0;
+	};
+
+	struct CommandComparator {
+		bool operator() (Command* c1, Command* c2) {
+			return c1->initial < c2->initial;
+		}
 	};
 
 	enum EntityType {PLAYER, FOOD, GENERAL};

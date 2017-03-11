@@ -13,6 +13,8 @@
 #include <windows.h>
 #include "..\listeners\PacketListener.h"
 #include <set>
+#include <queue>
+#include <iterator>
 
 class Server {
 public:
@@ -28,9 +30,22 @@ public:
 	}
 
 	void updatePacketListeners(int clientID, std::string info) {
-		PacketEvent event(clientID, info);
+		PacketEvent event(clientID, info, admin->getPlayer(clientID));
 		for (PacketListener* listener : packetListeners)
 			listener->update(&event);
+	}
+
+	void addCommand(GameEntity::Command* command) {
+		std::cout << "Adding command " << command->command << " with " << command->initial << std::endl;
+		commands.push(command);
+
+		if (commands.size() >= 2) {
+			std::cout << "Command 1 " << commands.top()->command << "  " << commands.top()->initial << std::endl;
+			commands.pop();
+			std::cout << "Command 2 " << commands.top()->command << "  " << commands.top()->initial << std::endl;
+			commands.pop();
+			std::cout << "Size is " << commands.size() << std::endl;
+		}
 	}
 
 	void run();
@@ -47,7 +62,7 @@ private:
 	EntityAdministrator* admin;
 	boolean paused = true;
 	std::set<PacketListener*> packetListeners;
-
+	std::priority_queue<GameEntity::Command*, std::vector<GameEntity::Command*>, GameEntity::CommandComparator> commands;
 };
 
 

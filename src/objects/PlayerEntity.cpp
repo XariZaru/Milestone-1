@@ -45,6 +45,7 @@ void PlayerEntity::update()
 	SYSTEMTIME elapsed;
 	GetSystemTime(&elapsed);
 
+	/*
 	if (!current_command || elapsed.wSecond - current_command->initial >= current_command->delay)
 	{
 
@@ -74,6 +75,7 @@ void PlayerEntity::update()
 			command_queue.pop_front();
 		}
 	}
+	*/
 
 	changeX(dx);
 	changeY(dy);
