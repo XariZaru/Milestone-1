@@ -174,7 +174,7 @@ int main(int argc, char *argv[]){
 	Server* gameServer = Server::getInstance();
 	//gameServer->run();
 	gameServer->printState();
-
+	gameServer->addPacketListener(&server);
 	// Need to put game loop somewhere here afterwards
 	cout << "Please set server port: ";
 	cin >> port;

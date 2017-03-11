@@ -12,6 +12,7 @@
 #include <vector>
 #include <map>
 #include <time.h>
+#include "..\src\listeners\PacketListener.h"
 
 using namespace std;
 
@@ -79,7 +80,7 @@ public:
     size_t MessageBufferLength;            // the payload data length of MessageBuffer
 };
 
-class webSocket{
+class webSocket : public PacketListener {
 public:
     webSocket(){
         callOnOpen = NULL;
@@ -91,6 +92,7 @@ public:
     void setOpenHandler(defaultCallback callback);
     void setCloseHandler(defaultCallback callback);
     void setMessageHandler(messageCallback callback);
+	virtual void update(PacketEvent* event);
     void setPeriodicHandler(nullCallback callback);
     void startServer(int port);
     void stopServer();

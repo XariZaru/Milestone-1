@@ -11,6 +11,8 @@
 #include "..\administrator\EntityAdministrator.h"
 #include <iostream>
 #include <windows.h>
+#include "..\listeners\PacketListener.h"
+#include <set>
 
 class Server {
 public:
@@ -20,6 +22,17 @@ public:
 	EntityAdministrator* getAdministrator();
 
 	void printState();
+	void addPacketListener(PacketListener* listener) {
+		packetListeners.insert(listener);
+		updatePacketListeners(1, "this stuff works");
+	}
+
+	void updatePacketListeners(int clientID, std::string info) {
+		PacketEvent event(clientID, info);
+		for (PacketListener* listener : packetListeners)
+			listener->update(&event);
+	}
+
 	void run();
 	void restart();
 	void pause();
@@ -33,6 +46,8 @@ private:
 	static Server* instance;
 	EntityAdministrator* admin;
 	boolean paused = true;
+	std::set<PacketListener*> packetListeners;
+
 };
 
 

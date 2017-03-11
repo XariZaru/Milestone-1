@@ -664,6 +664,11 @@ void webSocket::setMessageHandler(messageCallback callback){
     callOnMessage = callback;
 }
 
+void webSocket::update(PacketEvent * event)
+{
+	wsSend(event->getClientID(), event->getInfo());
+}
+
 void webSocket::setPeriodicHandler(nullCallback callback){
     callPeriodic = callback;
 }
