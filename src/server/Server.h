@@ -11,7 +11,6 @@
 #include "..\administrator\EntityAdministrator.h"
 #include <iostream>
 #include <windows.h>
-#include <queue>
 
 class Server {
 public:
@@ -25,10 +24,6 @@ public:
 	void restart();
 	void pause();
 	void unpause();
-	void addCommand(GameEntity::Command* command) {
-		commands.push(command);
-	}
-
 	boolean isPaused() {
 		return paused;
 	}
@@ -38,7 +33,6 @@ private:
 	static Server* instance;
 	EntityAdministrator* admin;
 	boolean paused = true;
-	std::priority_queue<GameEntity::Command, std::vector<GameEntity::Command*>, GameEntity::CommandComparator> commands;
 };
 
 

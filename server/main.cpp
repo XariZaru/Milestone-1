@@ -6,7 +6,7 @@
 #include <sstream>
 #include <time.h>
 #include "websocket.h"
-#include "..\src\server\server.h"
+#include "..\src\server\Server.h"
 #include <Windows.h>
 #include <thread>
 #include <chrono>
@@ -19,7 +19,7 @@
 
 using namespace std;
 
-webSocket* server = webSocket::getInstance();
+webSocket server;
 
 int player1score = 0;
 int player2score = 0;
@@ -33,12 +33,12 @@ void openHandler(int clientID){
 	ostringstream os;
 	os << "Stranger " << clientID << " has joined.";
 
-	vector<int> clientIDs = server->getClientIDs();
+	vector<int> clientIDs = server.getClientIDs();
 	for (unsigned int i = 0; i < clientIDs.size(); i++){
 		if (clientIDs[i] != clientID)
-			server->wsSend(clientIDs[i], os.str());
+			server.wsSend(clientIDs[i], os.str());
 	}
-	server->wsSend(clientID, "Welcome!");
+	server.wsSend(clientID, "Welcome!");
 }
 
 /* called when a client disconnects */
@@ -49,10 +49,10 @@ void closeHandler(int clientID){
 	Server::getInstance()->getAdministrator()->removeEntity(clientID);
 	Server::getInstance()->printState();
 
-	vector<int> clientIDs = server->getClientIDs();
+	vector<int> clientIDs = server.getClientIDs();
 	for (unsigned int i = 0; i < clientIDs.size(); i++){
 		if (clientIDs[i] != clientID)
-			server->wsSend(clientIDs[i], os.str());
+			server.wsSend(clientIDs[i], os.str());
 	}
 }
 
@@ -82,9 +82,7 @@ void messageHandler(int clientID, string message){
 	// If the message contains a key keyword, move in specific direction
 	found = message.find(".KEY");
 	if (found != std::string::npos) {
-		std::string packet = message.substr(0, found);
-		std::string command = packet.substr(0, packet.find(" "));
-		std::string time_stamp = packet.substr(packet.find(" ") + 1, packet.length());
+		std::string command = message.substr(0, found);
 		PlayerEntity* player = Server::getInstance()->getAdministrator()->getPlayer(clientID);
 		if (player == nullptr)
 			return;
@@ -117,7 +115,7 @@ void messageHandler(int clientID, string message){
 		long time_elapsed = st.wMilliseconds - time_start;
 		ostringstream oss;
 		oss << "ACK " << time_elapsed;
-		server->wsSend(clientID, oss.str());
+		server.wsSend(clientID, oss.str());
 	}
 
 	// If the message contains a timestamp keyword, returns timestamp after latency
@@ -142,10 +140,10 @@ void messageHandler(int clientID, string message){
 	}
 	*/
 
-	vector<int> clientIDs = server->getClientIDs();
+	vector<int> clientIDs = server.getClientIDs();
 	for (unsigned int i = 0; i < clientIDs.size(); i++){
 		if (clientIDs[i] != clientID)
-			server->wsSend(clientIDs[i], os.str());
+			server.wsSend(clientIDs[i], os.str());
 	}
 
 }
@@ -161,9 +159,9 @@ void periodicHandler(){
 		os << timestring;
 		
 
-		vector<int> clientIDs = server->getClientIDs();
+		vector<int> clientIDs = server.getClientIDs();
 		for (unsigned int i = 0; i < clientIDs.size(); i++)
-			server->wsSend(clientIDs[i], os.str());
+			server.wsSend(clientIDs[i], os.str());
 
 		next = time(NULL) + 10;
 	}
@@ -182,13 +180,13 @@ int main(int argc, char *argv[]){
 	cin >> port;
 
 	/* set event handler */
-	server->setOpenHandler(openHandler);
-	server->setCloseHandler(closeHandler);
-	server->setMessageHandler(messageHandler);
-	//server->setPeriodicHandler(periodicHandler);
+	server.setOpenHandler(openHandler);
+	server.setCloseHandler(closeHandler);
+	server.setMessageHandler(messageHandler);
+	//server.setPeriodicHandler(periodicHandler);
 
 	/* run the chatroom server, listen to ip '127.0.0.1' and port '8000' */
-	server->startServer(port);
+	server.startServer(port);
 
 	return 1;
 }

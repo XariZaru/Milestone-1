@@ -88,11 +88,6 @@ public:
         callPeriodic = NULL;
     }
 
-	static webSocket* getInstance() {
-		if (!socket)
-			socket = new webSocket();
-		return socket;
-	}
     void setOpenHandler(defaultCallback callback);
     void setCloseHandler(defaultCallback callback);
     void setMessageHandler(messageCallback callback);
@@ -104,7 +99,6 @@ public:
     vector<int> getClientIDs();
     string getClientIP(int clientID);
 private:
-	static webSocket* socket;
     vector<wsClient *> wsClients;
     map<int, int> socketIDmap;
     fd_set fds;

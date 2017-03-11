@@ -41,8 +41,7 @@
         //- SERVER FUNCTIONS -//
         //--------------------//
         var Server;
-        var map, height, width, canvas, b_size, tStamp;
-        var timeStamps = [];
+        var map, height, width, canvas, b_size, tStamp
         var latEstimate = 0;
         var offset = 0;
 
@@ -98,8 +97,8 @@
 
                 } else if(array_text[0] == "ACK") {
                     array_text.shift();
-                    calculationOffset = parseInt(array_text[0]);
-                    latEstimate = calculateOffset(calculationOffset);
+                    var time = parseInt(array_text[0]);
+                    latEstimate = time * 1000;
 
                     // If received packet is not food (player2), parse coordinates and draw player 2's snake
                 } else if (array_text[0] != "Food") {
@@ -227,13 +226,11 @@
         }
 
 
-        function calculateOffset(offset) {
+        function calculateOffset() {
             // Take time from server here
-            if (timeStamps.length > 0) {
-              var timestamp = timeStamps.pop();
-              var date = new Date();
-              return ((date.getTime() - timestamp) + offset) / 2;
-            }
+
+
+
         }
 
         // Calculates the Client Server Time (tStamp) Including Offset
@@ -263,7 +260,6 @@
             if (dir_1 != "") {
                 getServerTime();
                 Server.send(document.getElementById('player1').value, dir_1 + " " + tStamp.getTime() + ".KEY");
-                timeStamps.push(tStamp.getTime());
             }
 
 
