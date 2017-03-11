@@ -21,6 +21,12 @@ public:
 		unsigned int delay = 0;
 	};
 
+	struct CommandComparator {
+		bool operator() (Command* c1, Command* c2) {
+			return c1->initial > c2->initial;
+		}
+	};
+
 	enum EntityType {PLAYER, FOOD, GENERAL};
 	enum CommandType {LEFT, RIGHT, UP, DOWN};
 	virtual EntityType  getType() = 0;
