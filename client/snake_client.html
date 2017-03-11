@@ -98,8 +98,13 @@
 
                 } else if(array_text[0] == "ACK") {
                     array_text.shift();
-                    calculationOffset = parseInt(array_text[0]);
-                    latEstimate = calculateOffset(calculationOffset);
+                    var initialTime = array_text[0];
+                    var serverDelay = array_text[1];
+                    temp = Date.now();
+
+                    offset = ((temp - initialTime) + serverDelay) / 2
+
+                    latEstimate = offset;
 
                     // If received packet is not food (player2), parse coordinates and draw player 2's snake
                 } else if (array_text[0] != "Food") {
@@ -116,15 +121,6 @@
                     var coord = array_text[0].split(",");
                     paint(parseInt(coord[0]), parseInt(coord[1]), "green", "white");
                     //$log.append(($log.val() ? "\n" : '') + "Got food " + coord[0] + " " + coord[1]);
-                }
-
-                // If received packet is latency, calculates received timestamp from sent timestamp
-                // to determine the amount of latency
-                // Food 3434, 5252
-                else if (array_text[0] == "Latency") {
-                    array_text.shift();
-                    var time_stamp = array_text[0];
-                    var latency_text = "Latency: " + time_stamp + " ms";
                 }
             }
         }
