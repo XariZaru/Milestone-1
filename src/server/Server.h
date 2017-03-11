@@ -15,6 +15,7 @@
 #include <set>
 #include <queue>
 #include <iterator>
+#include <chrono>
 
 class Server {
 public:
@@ -36,16 +37,8 @@ public:
 	}
 
 	void addCommand(GameEntity::Command* command) {
-		std::cout << "Adding command " << command->command << " with " << command->initial << std::endl;
+		//std::cout << "Adding command " << command->command << " with " << command->initial << std::endl;
 		commands.push(command);
-
-		if (commands.size() >= 2) {
-			std::cout << "Command 1 " << commands.top()->command << "  " << commands.top()->initial << std::endl;
-			commands.pop();
-			std::cout << "Command 2 " << commands.top()->command << "  " << commands.top()->initial << std::endl;
-			commands.pop();
-			std::cout << "Size is " << commands.size() << std::endl;
-		}
 	}
 
 	void run();

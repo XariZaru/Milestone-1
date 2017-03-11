@@ -21,12 +21,13 @@ public:
 	struct Command {
 		std::string command;
 		unsigned long long initial = 0;
+		unsigned long long to_arrive = 0;
 		unsigned int delay = 0;
 	};
 
 	struct CommandComparator {
 		bool operator() (Command* c1, Command* c2) {
-			return c1->initial < c2->initial;
+			return c1->initial > c2->initial;
 		}
 	};
 

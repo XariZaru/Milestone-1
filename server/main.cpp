@@ -87,7 +87,7 @@ void messageHandler(int clientID, string message){
 		std::string command = packet.substr(0, space);
 		long long time_stamp = std::atoll(packet.substr(space + 1, packet.length()).c_str());
 
-		std::cout << command << " " << time_stamp << std::endl;
+		//std::cout << command << " " << time_stamp << std::endl;
 		PlayerEntity* player = Server::getInstance()->getAdministrator()->getPlayer(clientID);
 		if (player == nullptr)
 			return;
@@ -100,12 +100,13 @@ void messageHandler(int clientID, string message){
 			SYSTEMTIME time;
 			GetSystemTime(&time);
 			std::uniform_int_distribution<int> delay(0, 2);
-			GameEntity::Command command_event;
-			command_event.command = command;
-			command_event.initial = time_stamp;
-			command_event.delay = delay(randomGenerator);
+			GameEntity::Command* command_event = new GameEntity::Command();
+			command_event->command = command;
+			command_event->initial = time_stamp;
+			command_event->delay = delay(randomGenerator);
+			command_event->to_arrive = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1) + command_event->delay * 1000;
 
-			Server::getInstance()->addCommand(&command_event);
+			Server::getInstance()->addCommand(command_event);
 
 			/*
 			if (player->getCommand())

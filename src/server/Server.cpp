@@ -72,6 +72,15 @@ void Server::printState()
 void Server::run()
 {
 	paused = false;
+
+	SYSTEMTIME st;
+	GetSystemTime(&st);
+
+	while (!commands.empty() && commands.top()->to_arrive < std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1)) {
+		std::cout << "This command has passed " << commands.top()->command << " " << commands.top()->to_arrive << std::endl;
+		commands.pop();
+	}
+
 	for (GameEntity* entity : admin->getEntities()) {
 		entity->update();
 		if (entity->getType() == GameEntity::EntityType::PLAYER) {
