@@ -65,7 +65,7 @@ void PlayerEntity::update()
 				setDy(1);
 			}
 			long time_elapsed = elapsed.wMilliseconds - current_command->initial;
-			ostringstream oss;
+			std::ostringstream oss;
 			oss << "ACK " << time_elapsed;
 			webSocket::getInstance()->wsSend(id, oss.str());
 			delete current_command;

@@ -10,7 +10,10 @@
 
 #include <iostream>
 #include <deque>
-#include <Windows.h>
+#include <sstream>
+#include <iostream>
+#include <string>
+#include "Windows.h"
 
 class GameEntity {
 public:
