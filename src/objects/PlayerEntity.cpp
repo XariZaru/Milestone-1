@@ -64,6 +64,9 @@ void PlayerEntity::update()
 			else if (command == "down") {
 				setDy(1);
 			}
+			long time_elapsed = elapsed.wMilliseconds - current_command->initial;
+			std::ostringstream oss;
+			oss << "ACK " << time_elapsed;
 			delete current_command;
 			current_command = nullptr;
 		} else if (command_queue.size() > 0) {
