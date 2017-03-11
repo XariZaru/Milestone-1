@@ -102,9 +102,11 @@
                     var serverDelay = parseInt(array_text[0]);
                     temp = Date.now();
 
-                    offset = ((temp - initialTime) + serverDelay) / 2
+                    calculation = Math.floor(((temp - initialTime) + serverDelay) / 2);
+                    if (!isNaN(calculation))
+                      latEstimate = calculation;
 
-                    latEstimate = offset;
+                    //latEstimate = offset;
 
                     // If received packet is not food (player2), parse coordinates and draw player 2's snake
                 } else if (array_text[0] != "Food") {
@@ -236,7 +238,7 @@
         function getServerTime() {
             var date = new Date();
 
-            date.setTime(date.getTime() + offset);
+            date.setTime(date.getTime());
             tStamp = date;
         }
 
@@ -257,9 +259,7 @@
 
             // Sends which direction player presses to server
             if (dir_1 != "") {
-                getServerTime();
-                Server.send(document.getElementById('player1').value, dir_1 + " " + tStamp.getTime() + ".KEY");
-                timeStamps.push(tStamp.getTime());
+                Server.send(document.getElementById('player1').value, dir_1 + " " + Date.now() + ".KEY");
             }
 
 
