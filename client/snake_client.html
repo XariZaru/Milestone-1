@@ -98,8 +98,8 @@
 
                 } else if(array_text[0] == "ACK") {
                     array_text.shift();
-                    var initialTime = array_text[0];
-                    var serverDelay = array_text[1];
+                    var initialTime = parseInt(array_text[1]);
+                    var serverDelay = parseInt(array_text[0]);
                     temp = Date.now();
 
                     offset = ((temp - initialTime) + serverDelay) / 2
