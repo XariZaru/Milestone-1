@@ -98,6 +98,11 @@ void Server::run()
 		} else if (input == "down") {
 			player->setDy(1);
 		}
+		unsigned long long process_time = time - command->to_arrive;
+		std::ostringstream oss;
+		oss << "ACK " << process_time << " " << command->initial; // "ACK process_time initial_time"
+		std::cout << oss.str() << std::endl;
+		this->updatePacketListeners(player->getId(), oss.str());
 		bucket.erase(bucket.begin());
 		delete command;
 	}
