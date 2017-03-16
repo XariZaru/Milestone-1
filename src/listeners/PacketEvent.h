@@ -19,6 +19,7 @@ public:
 	GameEntity* getPlayer() {
 		return player;
 	}
+
 private:
 	std::string info;
 	GameEntity* player;

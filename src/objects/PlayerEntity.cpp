@@ -117,6 +117,16 @@ void PlayerEntity::setDx(int pdx)
 	}
 }
 
+bool PlayerEntity::intersects(PlayerEntity * player)
+{
+	for (int x = (player == this ? 1 : 0); x < player->getPieces().size(); x++) {
+		SnakePiece& part = player->getPieces().at(x);
+		if (position.first == part.x && position.second == part.y)
+			return true;
+	}
+	return false;
+}
+
 void PlayerEntity::setDy(int pdy)
 {
 	if (dy == 0) {
@@ -125,7 +135,7 @@ void PlayerEntity::setDy(int pdy)
 	}
 }
 
-std::deque<PlayerEntity::SnakePiece> PlayerEntity::getPieces()
+std::deque<PlayerEntity::SnakePiece>& PlayerEntity::getPieces()
 {
 	return snake;
 }

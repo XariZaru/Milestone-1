@@ -26,9 +26,15 @@ public:
 		unsigned int delay = 0;
 	};
 
-	struct CommandComparator {
+	struct BucketComparator {
 		bool operator() (Command* c1, Command* c2) {
 			return c1->initial > c2->initial;
+		}
+	};
+
+	struct CommandComparator {
+		bool operator() (Command* c1, Command* c2) {
+			return c1->to_arrive > c2->to_arrive;
 		}
 	};
 

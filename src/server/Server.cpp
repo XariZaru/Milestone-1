@@ -80,13 +80,13 @@ void Server::run()
 	if (time - pd >= 100) {
 		pd = time;
 		while (!commands.empty() && commands.top()->to_arrive < std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1)) {
-			bucket.insert(bucket.begin(), commands.top());
+			bucket.push(commands.top());
 			commands.pop();
 		}
 	}
 
 	if (bucket.size() > 0) {
-		GameEntity::Command* command = bucket.at(0);
+		GameEntity::Command* command = bucket.top();
 		std::string input = command->command;
 		PlayerEntity* player = (PlayerEntity*) command->player;
 		if (input == "left") {
@@ -103,7 +103,7 @@ void Server::run()
 		oss << "ACK " << process_time << " " << command->initial; // "ACK process_time initial_time"
 		std::cout << oss.str() << std::endl;
 		this->updatePacketListeners(player->getId(), oss.str());
-		bucket.erase(bucket.begin());
+		bucket.pop();
 		delete command;
 	}
 
@@ -118,7 +118,16 @@ void Server::run()
 			if (player->getPosition().first == food->getPosition().first && player->getPosition().second == food->getPosition().second) {		
 				admin->getFood()->respawn();
 				player->grow();
-			}
+			} 
+
+			PlayerEntity* other_player = nullptr;
+			for (PlayerEntity* p : admin->getPlayers())
+				if (p->getId() != player->getId()) {
+					other_player = p;
+					break;
+				}
+			if (other_player && (player->intersects(other_player)) || player->intersects(player))
+				restart();
 		}
 		if (entity->getPosition().first < 0 || entity->getPosition().first > 50 || entity->getPosition().second < 0 || entity->getPosition().second > 50)
 			restart();

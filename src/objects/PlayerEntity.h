@@ -14,10 +14,6 @@
 class PlayerEntity: public GameEntity {
 public:
 
-	struct Direction {
-		int dx = 0, dy = 0;
-	};
-
 	struct SnakePiece {
 		int x;
 		int y;
@@ -39,6 +35,8 @@ public:
 	void setCommand(Command* command) {
 		current_command = command;
 	}
+
+	bool intersects(PlayerEntity* player);
 	void setDy(int dy);
 	void setScore(int value) {
 		score = value;
@@ -48,7 +46,7 @@ public:
 		return score;
 	}
 
-	std::deque<SnakePiece> getPieces();
+	std::deque<SnakePiece>& getPieces();
 
 	EntityType getType() {
 		return EntityType::PLAYER;
