@@ -230,7 +230,7 @@
             if (timeStamps.length > 0) {
               var timestamp = timeStamps.pop();
               var date = new Date();
-              return ((date.getTime() - timestamp) + offset) / 2;
+              return ((date.getTime() - timestamp) - offset) / 2;
             }
         }
 
