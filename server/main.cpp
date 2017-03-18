@@ -16,7 +16,6 @@
 #include <queue>
 #include <algorithm>
 
-
 using namespace std;
 
 webSocket server;
@@ -25,10 +24,11 @@ int player1score = 0;
 int player2score = 0;
 string player1name = "";
 string player2name = "";
+
 // Sets random seed
 mt19937 randomGenerator(time(0));
 
-/* called when a client connects */
+// Calls this function when a client connects
 void openHandler(int clientID){
 	ostringstream os;
 	os << "Stranger " << clientID << " has joined.";
@@ -41,7 +41,7 @@ void openHandler(int clientID){
 	server.wsSend(clientID, "Welcome!");
 }
 
-/* called when a client disconnects */
+// Calls this function when a client disconnects
 void closeHandler(int clientID){
 	ostringstream os;
 	os << "Stranger " << clientID << " has left.";
@@ -56,22 +56,16 @@ void closeHandler(int clientID){
 	}
 }
 
-/* called when a client sends a message to the server */
+// Calls this function when client sends a message to the server
 void messageHandler(int clientID, string message){
 	cout << "Message received: " << message << endl;
 	ostringstream os;
 	os << "Stranger " << clientID << " says: " << message;
 
-	/*
-	std::uniform_int_distribution<int> delay(0, 1000);
-	cout << "Time: " << time(0) << endl;
-	this_thread::sleep_for(chrono::milliseconds(delay(randomGenerator)));
-	cout << "Time: " << time(0) << endl;
-	*/
-
-	// If message contains a player keyword, sets the name of player to inputted name
+	// If message contains ".PLAYER1" keyword, sets the name of player to inputted name
 	std::size_t found = message.find(".Player1");
-	if(found != std::string::npos){
+
+	if (found != std::string::npos) {
 		player1name = message.substr(0, found);
 		Server::getInstance()->getAdministrator()->addPlayer(player1name, clientID);
 		cout << "Player " << (Server::getInstance()->getAdministrator()->getPlayers().size()) << ": " << player1name << endl;
@@ -79,7 +73,7 @@ void messageHandler(int clientID, string message){
 		Server::getInstance()->unpause();
 	} 
 
-	// If the message contains a key keyword, move in specific direction
+	// If the message contains the ".KEY" keyword, moves in specific direction
 	found = message.find(".KEY");
 	if (found != std::string::npos) {
 		std::string packet = message.substr(0, found);
@@ -87,15 +81,18 @@ void messageHandler(int clientID, string message){
 		std::string command = packet.substr(0, space);
 		long long time_stamp = std::atoll(packet.substr(space + 1, packet.length()).c_str());
 
-		//std::cout << command << " " << time_stamp << std::endl;
 		PlayerEntity* player = Server::getInstance()->getAdministrator()->getPlayer(clientID);
+
 		if (player == nullptr)
 			return;
-		SYSTEMTIME st, delay;
+
+		SYSTEMTIME st;
 		GetSystemTime(&st);
 		long time_start = st.wMilliseconds;
 		bool paused = Server::getInstance()->isPaused();
 
+		// Creates a command event that stores the necessary timestamps
+		// such as time after artificial delay and time when processed
 		if (!paused) {
 			SYSTEMTIME time;
 			GetSystemTime(&time);
@@ -108,19 +105,17 @@ void messageHandler(int clientID, string message){
 			command_event->to_arrive = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1) + command_event->delay;
 
 			Server::getInstance()->addCommand(command_event);
+			
+		} 
 
-			/*
-			if (player->getCommand())
-				player->addCommand(&command_event);
-			else
-				player->setCommand(&command_event);
-			*/
-		} else if (command == "p") {
+		else if (command == "p") {
 			if (Server::getInstance()->isPaused())
 				Server::getInstance()->unpause();
 			else
 				Server::getInstance()->pause();
 		}
+
+		// Sends an acknowledgement back to the 
 		GetSystemTime(&st);
 		long time_elapsed = st.wMilliseconds - time_start;
 		ostringstream oss;
@@ -128,41 +123,20 @@ void messageHandler(int clientID, string message){
 		server.wsSend(clientID, oss.str());
 	}
 
-	// If the message contains a timestamp keyword, returns timestamp after latency
-	found = message.find(".TIMESTAMP");
-	if (found != std::string::npos) {
-
-	};
-
-	/*
-	// Update scores
-	found = message.find(".P1Score");
-	if (found != std::string::npos)
-	{
-		player1score = stoi(message.substr(0, found));
-		cout << player1name << ": " << player1score << endl;
-	}
-	found = message.find(".P2Score");
-	if (found != std::string::npos)
-	{
-		player2score = stoi(message.substr(0, found));
-		cout << player2name << ": " << player2score << endl;
-	}
-	*/
-
 	vector<int> clientIDs = server.getClientIDs();
-	for (unsigned int i = 0; i < clientIDs.size(); i++){
+
+	for (unsigned int i = 0; i < clientIDs.size(); i++) {
 		if (clientIDs[i] != clientID)
 			server.wsSend(clientIDs[i], os.str());
 	}
-
 }
 
-/* called once per select() loop */
+// Calls this function once per select() loop
 void periodicHandler(){
 	static time_t next = time(NULL) + 10;
 	time_t current = time(NULL);
-	if (current >= next){
+
+	if (current >= next) {
 		ostringstream os;
 		string timestring = ctime(&current);
 		timestring = timestring.substr(0, timestring.size() - 1);
@@ -179,23 +153,18 @@ void periodicHandler(){
 
 int main(int argc, char *argv[]){
 	int port;
-
-
 	Server* gameServer = Server::getInstance();
-	//gameServer->run();
 	gameServer->printState();
 	gameServer->addPacketListener(&server);
-	// Need to put game loop somewhere here afterwards
 	cout << "Please set server port: ";
 	cin >> port;
 
-	/* set event handler */
+	// Sets event handler
 	server.setOpenHandler(openHandler);
 	server.setCloseHandler(closeHandler);
 	server.setMessageHandler(messageHandler);
-	//server.setPeriodicHandler(periodicHandler);
 
-	/* run the chatroom server, listen to ip '127.0.0.1' and port '8000' */
+	// Runs the server
 	server.startServer(port);
 
 	return 1;

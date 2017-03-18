@@ -30,8 +30,9 @@ PlayerEntity::PlayerEntity(std::string str, std::pair<int, int> pos, int clientI
 	}
 }
 
-PlayerEntity::~PlayerEntity() {
-	// TODO Auto-generated destructor stub
+PlayerEntity::~PlayerEntity() 
+{
+	// DECONSTRUCTOR
 }
 
 int PlayerEntity::getId()
@@ -45,42 +46,10 @@ void PlayerEntity::update()
 	SYSTEMTIME elapsed;
 	GetSystemTime(&elapsed);
 
-	/*
-	if (!current_command || elapsed.wSecond - current_command->initial >= current_command->delay)
-	{
-
-		if (current_command)
-		{
-			std::string command = current_command->command;
-
-			if (command == "left") {
-				setDx(-1);
-			}
-			else if (command == "right") {
-				setDx(1);
-			}
-			else if (command == "up") {
-				setDy(-1);
-			}
-			else if (command == "down") {
-				setDy(1);
-			}
-			long time_elapsed = elapsed.wMilliseconds - current_command->initial;
-			std::ostringstream oss;
-			oss << "ACK " << time_elapsed;
-			delete current_command;
-			current_command = nullptr;
-		} else if (command_queue.size() > 0) {
-			current_command = command_queue.at(0);
-			command_queue.pop_front();
-		}
-	}
-	*/
-
 	changeX(dx);
 	changeY(dy);
 
-	for (int x = 0; x < snake.size(); x++) {
+	for (unsigned int x = 0; x < snake.size(); x++) {
 		SnakePiece& piece = snake.at(x);
 		piece.previous_coordinate = std::make_pair(piece.x, piece.y);
 		if (x != 0) { // Not first piece
@@ -119,11 +88,12 @@ void PlayerEntity::setDx(int pdx)
 
 bool PlayerEntity::intersects(PlayerEntity * player)
 {
-	for (int x = (player == this ? 1 : 0); x < player->getPieces().size(); x++) {
+	for (unsigned int x = (player == this ? 1 : 0); x < player->getPieces().size(); x++) {
 		SnakePiece& part = player->getPieces().at(x);
 		if (position.first == part.x && position.second == part.y)
 			return true;
 	}
+
 	return false;
 }
 
@@ -145,11 +115,13 @@ std::string PlayerEntity::getName()
 	return name;
 }
 
-int PlayerEntity::size() {
+int PlayerEntity::size() 
+{
 	return length;
 }
 
-void PlayerEntity::grow() {
+void PlayerEntity::grow() 
+{
 	SnakePiece piece;
 	piece.x = snake.at(snake.size() - 1).x - dx;
 	piece.y = snake.at(snake.size() - 1).y - dy;

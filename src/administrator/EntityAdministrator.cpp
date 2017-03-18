@@ -10,10 +10,10 @@
 
 std::vector<GameEntity> entities;
 
-EntityAdministrator::EntityAdministrator() {
+EntityAdministrator::EntityAdministrator() 
+{
 	entities = std::vector<GameEntity*>();
 }
-
 
 const std::vector<GameEntity*> EntityAdministrator::getEntities()
 {
@@ -39,7 +39,7 @@ FoodEntity* EntityAdministrator::getFood()
 
 void EntityAdministrator::removeEntity(std::string & name)
 {
-	for (std::vector<GameEntity*>::iterator it = entities.begin(); it != entities.end(); it++)
+	for (std::vector<GameEntity*>::iterator it = entities.begin(); it != entities.end(); it++) {
 		if ((*it)->getName() == name) {
 			int index = it - entities.begin();
 			GameEntity* entity = *it;
@@ -47,11 +47,12 @@ void EntityAdministrator::removeEntity(std::string & name)
 			delete entity;
 			break;
 		}
+	}
 }
 
 void EntityAdministrator::removeEntity(int id)
 {
-	for (std::vector<GameEntity*>::iterator it = entities.begin(); it != entities.end(); it++)
+	for (std::vector<GameEntity*>::iterator it = entities.begin(); it != entities.end(); it++) {
 		if ((*it)->getId() == id) {
 			int index = it - entities.begin();
 			GameEntity* entity = *it;
@@ -59,6 +60,7 @@ void EntityAdministrator::removeEntity(int id)
 			delete entity;
 			break;
 		}
+	}
 }
 
 void EntityAdministrator::addPlayer(std::string & name, int clientID)
@@ -68,16 +70,20 @@ void EntityAdministrator::addPlayer(std::string & name, int clientID)
 
 GameEntity * EntityAdministrator::getEntity(std::string & name)
 {
-	for (GameEntity* entity : entities)
+	for (GameEntity* entity : entities) {
 		if (entity->getName() == name)
 			return entity;
+	}
+
 	return nullptr;
 }
 
 PlayerEntity * EntityAdministrator::getPlayer(int clientID)
 {
-	for (GameEntity* entity : entities)
+	for (GameEntity* entity : entities) {
 		if (entity->getId() == clientID)
 			return (PlayerEntity*)entity;
+	}
+
 	return nullptr;
 }

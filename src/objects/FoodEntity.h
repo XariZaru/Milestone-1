@@ -18,7 +18,8 @@ public:
 	FoodEntity();
 	virtual ~FoodEntity();
 
-	EntityType getType() {
+	EntityType getType() 
+	{
 		return EntityType::FOOD;
 	}
 

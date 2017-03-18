@@ -11,45 +11,30 @@
 
 Server* Server::instance;
 
-Server::Server() {
+Server::Server() 
+{
 	admin = new EntityAdministrator();
 	admin->addEntity(*new FoodEntity());
-
-	
-	/*
-	// Delete after. Test cases
-	admin->addEntity(*new PlayerEntity("Jon", std::make_pair(0, 0)));
-	admin->addEntity(*new PlayerEntity("Wesley", std::make_pair(0, 500)));
-	admin->addEntity(*new FoodEntity());
-
-	for (GameEntity* entity : admin->getEntities()) {
-		std::cout << "This is the object's name " << entity->getName().c_str() << " and type " << entity->getType();
-		std::cout << " and position ";
-		std::cout << entity->getPosition().first << ", " << entity->getPosition().second << std::endl;
-	}
-
-	std::string name = "Jon";
-	std::cout << "Retrieved entity with name " << name.c_str() << " " << admin->getEntity(name) << std::endl;
-
-	admin->removeEntity(name);
-	*/
-	
 }
 
-Server::~Server() {
+Server::~Server() 
+{
 	delete admin;
 	delete Server::instance;
 }
 
-Server* Server::getInstance() {
+Server* Server::getInstance() 
+{
 	if (!Server::instance) {
 		Server::instance = new Server();
 		Server::instance->pd = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
 	}
+
 	return Server::instance;
 }
 
-EntityAdministrator* Server::getAdministrator() {
+EntityAdministrator* Server::getAdministrator() 
+{
 	return admin;
 }
 
@@ -85,6 +70,7 @@ void Server::run()
 		}
 	}
 
+	// Bucket for Bucket Synchronization
 	if (bucket.size() > 0) {
 		GameEntity::Command* command = bucket.top();
 		std::string input = command->command;
@@ -108,7 +94,6 @@ void Server::run()
 	}
 
 	for (GameEntity* entity : admin->getEntities()) {
-
 		entity->update();
 		if (entity->getType() == GameEntity::EntityType::PLAYER) {
 			PlayerEntity* player = (PlayerEntity*)entity;
@@ -133,7 +118,6 @@ void Server::run()
 			restart();
 
 	}
-	//printState();
 }
 
 // Restarts the game and sets scores to players to respective areas.

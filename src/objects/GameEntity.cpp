@@ -12,7 +12,8 @@ std::string GameEntity::getName()
 	return "";
 }
 
-std::pair<int, int> GameEntity::getPosition() {
+std::pair<int, int> GameEntity::getPosition() 
+{
 	return position;
 }
 

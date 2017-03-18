@@ -14,6 +14,7 @@
 #include "..\objects\FoodEntity.h"
 
 class EntityAdministrator {
+
 public:
 	EntityAdministrator();
 
@@ -21,7 +22,8 @@ public:
 	const std::vector<PlayerEntity*> getPlayers();
 	FoodEntity* getFood();
 
-	bool addEntity(GameEntity& entity) {
+	bool addEntity(GameEntity& entity) 
+	{
 		entities.push_back(&entity);
 		return true;
 	}
